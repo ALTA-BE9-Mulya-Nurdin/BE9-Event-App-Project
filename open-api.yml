@@ -286,115 +286,6 @@ paths:
                     type: string
                     example: failed to get all Category
 
-    post:
-      tags:
-        - Categorys
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: IT
-                
-      responses:
-        "200":
-          description: success create
-          content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    message:
-                      type: string
-                      example: success to create Category
-        "400":
-            description: bad request
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    message:
-                      type: string
-                      example: failed to create Category
-    put:
-      tags:
-        - Categorys
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-            example: 1
-
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: IT
-
-      responses:
-        "200":
-          description: success edit
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: success edit Category by id
-        "400":
-          description: bad request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: failed to edit Category by id
-
-    delete:
-      tags:
-        - Categorys
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-            example: 1
-
-      responses:
-        "200":
-          description: success delete
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: success delete category
-        "400":
-          description: bad request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: failed to delete category
 
   /events:
     get:
@@ -713,6 +604,43 @@ paths:
                     message:
                       type: string
                       example: failed to delete event
+
+  /event_detail:
+    post:
+      tags:
+        - Event Detail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                events_id:
+                  type: integer
+                  example: 1
+
+      responses:
+        "200":
+          description: success create
+          content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: success to join event
+        "400":
+            description: bad request
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: failed to join event
+
   /comments:
     get:
       tags:
@@ -749,7 +677,69 @@ paths:
                     type: string
                     example: failed to get all comment
 
-  
+    post:
+      tags:
+        - Comments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  example: Ini sebuah acara live coding
+
+      responses:
+        "200":
+          description: success create
+          content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: success to create comment
+        "400":
+            description: bad request
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: failed to create comment
+  /history_events:
+    get:
+      tags:
+        - History Events
+      responses:
+        "200":
+          description: success to get all events
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users_id:
+                    type: integer
+                    example: 2
+                  events_id:
+                    type: integer
+                    example: 2
+                  
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed to get all events
     
     # get:
     #   tags:
