@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+#  mysql-server:
+#    image: mysql
+#    restart: always
+#    environment:
+#      MYSQL_ROOT_PASSWORD: secret
+#    volumes:
+#      - mysql-data:/var/lib/mysql
+#    ports:
+#      - "3306:3306"
+
+  phpmyadmin:
+    image: phpmyadmin:5-fpm
+    restart: always
+    environment:
+      PMA_HOST: "${DB_HOST}"
+      PMA_USER: "${DB_USERNAME}"
+      PMA_PASSWORD: "${DB_PASSWORD}"
+    ports:
+      - "8081:80"
