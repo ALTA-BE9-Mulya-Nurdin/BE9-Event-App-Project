@@ -1,0 +1,67 @@
+# /login
+# email dan password
+
+# Post Users Dan Get All Users
+# /users
+# image -> default.jpg
+# username -> string
+# email -> string, unique
+# password -> string, bcrypt
+# phone -> string, unique
+# address -> string
+
+# Get Users ID Dan Update Users ID
+# /users/id
+# image -> default.jpg
+# username -> string
+# email -> string, unique
+# password -> string, bcrypt
+# phone -> string, unique
+# address -> string
+
+# Delete Users ID
+# /users/id
+
+# Post Events Dan Get All Events
+# /events
+# categorys_id -> int
+# image -> string
+# name -> string
+# address -> string
+# date -> string
+# price -> int
+# quote -> int
+# longitude -> string
+# latitude -> string
+# link -> string
+# description -> string
+# status -> string
+
+# Get Events ID Dan Update Events ID
+# /events/id
+# categorys_id -> int
+# image -> string
+# name -> string
+# address -> string
+# date -> string
+# price -> int
+# quote -> int
+# longitude -> string
+# latitude -> string
+# link -> string
+# description -> string
+# status -> string
+
+# Delete Events ID
+# /events/id
+
+# Post Events Detail Dan Get All Event (User ID)
+# Request Body yang dikirimkan oleh FE
+# users_id dan events_id
+
+# Comments Pada Event
+# FE mengirimkan sebuah request body users_id dan events_id
+# description -> string
+
+# History Events
+# Mengambil dari data events detail yang sesuai dengan users_id
