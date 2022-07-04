@@ -16,9 +16,13 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /home/instanceBe9/Be9_E-Commerce-Group-Project
-            git pull origin main
-            docker stop appEventContainer
-            docker rm appEventContainer
-            docker build -t alta-event:latest .
-            docker run -d -p 80:8000 -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e DB_PORT=${{ secrets.DB_PORT }} -e DB_HOST=${{ secrets.DB_HOST }} -e DB_NAME=${{ secrets.DB_NAME }} --name appEventContainer alta-event:latest
+            cd /home/vmgcp
+            ls -la
+            whoami
+            git clone git@github.com:ALTA-BE9-Mulya-Nurdin/BE9-Event-App-Project.git event-apps
+            # git pull origin main
+            docker kill $(docker ps -q)
+            docker rm $(docker ps -a -q)
+            docker rmi $(docker images -q)
+            docker build -t apps-event:latest .
+            docker run -d -p 80:8000 -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e DB_PORT=${{ secrets.DB_PORT }} -e DB_HOST=${{ secrets.DB_HOST }} -e DB_NAME=${{ secrets.DB_NAME }} --name appEventContainer apps-event:latest
