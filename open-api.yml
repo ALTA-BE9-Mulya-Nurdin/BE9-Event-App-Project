@@ -1,0 +1,775 @@
+openapi: "3.0.3"
+info:
+  title: GOMEET
+  description: description GOMEET
+  contact:
+    name: API support
+    url: https://www.alterra.id/support
+    email: support@alterra.id
+  license:
+    name: apache 2.0
+    url: https://www.apache.org/licenses/LINCENSES-2.0.html
+  version: "1.0.1"
+externalDocs:
+  description: Event Planning external docs API
+  url: https://eventplanning.id
+servers:
+  - url: https://{environment}.api.alterra.id/v1
+    description: ALTA API server
+    variables:
+      environment:
+        default: dev
+        enum:
+          - dev
+          - staging
+          - production
+  - url: https://event.dwp.my.id/
+    description: GCP API Server
+
+paths:
+  /login:
+    post:
+      tags:
+        - "Authentication"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: fajar@gmail.com
+                password:
+                  type: string
+                  example: qwerty123
+      responses:
+        "200":
+          description: success create
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: success login
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed to login
+
+  /users:
+    post:
+      tags:
+        - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  example: Gambar.jpg
+                username:
+                  type: string
+                  example: Fajar jahwat
+                email:
+                  type: string
+                  example: fajar@gmail.com
+                password:
+                  type: string
+                  example: qwerty123
+                phone:
+                  type: string
+                  example: 0812345678
+                address:
+                  type: string
+                  example: jakarta, Blok M 15
+      responses:
+        "200":
+          description: success create
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: success create user
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed to create user
+
+  /users/{id}:
+    get:
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+
+      responses:
+        "200":
+          description: success to get user by id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  image:
+                      type: string
+                      example: image.jpg
+                  username:
+                    type: string
+                    example: Fajar jahwat
+                  email:
+                    type: string
+                    example: fajar@gmail.com
+                  password:
+                    type: string
+                    example: qwerty123
+                  phone:
+                    type: string
+                    example: 0812345678
+                  address:
+                    type: string
+                    example: jakarta, Blok M 15
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed to get user by id
+    put:
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  example: image.jpg
+                username:
+                  type: string
+                  example: Fajar jahwat
+                email:
+                  type: string
+                  example: fajar@gmail.com
+                password:
+                  type: string
+                  example: qwerty123
+                phone:
+                  type: string
+                  example: 0812345678
+                address:
+                  type: string
+                  example: jakarta, Blok M 15
+
+      responses:
+        "200":
+          description: success edit
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: success edit user by id
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed to edit user by id
+    delete:
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+
+      responses:
+        "200":
+          description: success delete
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: success delete user
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed to delete user
+
+  /categorys:
+    get:
+      tags:
+        - Categorys
+      responses:
+        "200":
+          description: success to get all Category
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: IT
+                  
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed to get all Category
+
+    post:
+      tags:
+        - Categorys
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: IT
+                
+      responses:
+        "200":
+          description: success create
+          content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: success to create Category
+        "400":
+            description: bad request
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: failed to create Category
+    put:
+      tags:
+        - Categorys
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: IT
+
+      responses:
+        "200":
+          description: success edit
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: success edit Category by id
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed to edit Category by id
+
+    delete:
+      tags:
+        - Categorys
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+
+      responses:
+        "200":
+          description: success delete
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: success delete category
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed to delete category
+
+  /events:
+    get:
+      tags:
+        - Events
+      responses:
+        "200":
+          description: success to get all event
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  users_id:
+                    type: integer
+                    example: 1
+                  categorys_id:
+                      type: integer
+                      example: 1
+                  image:
+                    type: string
+                    example: Gambar.jpg
+                  name:
+                    type: string
+                    example: Live Coding
+                  address:
+                    type: string
+                    example: jakarta, Blok M 15
+                  date:
+                    type: string
+                    example: 07-07-2022
+                  price:
+                    type: integer
+                    example: 100000
+                  quota:
+                    type: integer
+                    example: 100
+                  longtitude:
+                    type: string
+                    example: -38.44
+                  latitude:
+                    type: string
+                    example: -38.44
+                  link:
+                    type: string
+                    example: https://meet.google.com
+                  description:
+                    type: string
+                    example: Ini sebuah acara live coding
+                  status:
+                    type: string
+                    example: online
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed to get all event
+
+    post:
+      tags:
+        - Events
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                users_id:
+                    type: integer
+                    example: 1
+                categorys_id:
+                    type: integer
+                    example: 1
+                image:
+                  type: string
+                  example: Gambar.jpg
+                name:
+                  type: string
+                  example: Live Coding
+                address:
+                  type: string
+                  example: jakarta, Blok M 15
+                date:
+                  type: string
+                  example: 07-07-2022
+                price:
+                  type: integer
+                  example: 100000
+                quota:
+                  type: integer
+                  example: 100
+                longtitude:
+                  type: string
+                  example: -38.44
+                latitude:
+                  type: string
+                  example: -38.44
+                link:
+                  type: string
+                  example: https://meet.google.com
+                description:
+                  type: string
+                  example: Ini sebuah acara live coding
+                status:
+                  type: string
+                  example: online
+
+      responses:
+        "200":
+          description: success create
+          content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: success to create event
+        "400":
+            description: bad request
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: failed to create event
+
+  /events/{id}:
+    get:
+      tags:
+        - Events
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+
+      responses:
+        "200":
+          description: success to get user by id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  users_id:
+                    type: integer
+                    example: 1
+                  categorys_id:
+                      type: integer
+                      example: 1
+                  image:
+                    type: string
+                    example: Gambar.jpg
+                  name:
+                    type: string
+                    example: Live Coding
+                  address:
+                    type: string
+                    example: jakarta, Blok M 15
+                  date:
+                    type: string
+                    example: 07-07-2022
+                  price:
+                    type: integer
+                    example: 100000
+                  quota:
+                    type: integer
+                    example: 100
+                  longtitude:
+                    type: string
+                    example: -38.44
+                  latitude:
+                    type: string
+                    example: -38.44
+                  link:
+                    type: string
+                    example: https://meet.google.com
+                  description:
+                    type: string
+                    example: Ini sebuah acara live coding
+                  status:
+                    type: string
+                    example: online
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed to get event by id
+
+    put:
+      tags:
+        - Events
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                categorys_id:
+                  type: integer
+                  example: 1
+                image:
+                  type: string
+                  example: Gambar.jpg
+                name:
+                  type: string
+                  example: Live Coding
+                address:
+                  type: string
+                  example: jakarta, Blok M 15
+                date:
+                  type: string
+                  example: 07-07-2022
+                price:
+                  type: integer
+                  example: 100000
+                quota:
+                  type: integer
+                  example: 100
+                longtitude:
+                  type: string
+                  example: -38.44
+                latitude:
+                  type: string
+                  example: -38.44
+                link:
+                  type: string
+                  example: https://meet.google.com
+                description:
+                  type: string
+                  example: Ini sebuah acara live coding
+                status:
+                  type: string
+                  example: online
+
+      responses:
+        "200":
+          description: success edit
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: success edit event by id
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed to edit event by id
+
+    delete:
+        tags:
+          - Events
+        parameters:
+          - in: path
+            name: id
+            required: true
+            schema:
+              type: integer
+              example: 1
+
+        responses:
+          "200":
+            description: success delete
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: success delete event
+          "400":
+            description: bad request
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: failed to delete event
+  /comments:
+    get:
+      tags:
+        - Comments
+      responses:
+        "200":
+          description: success to get all comment
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  users_id:
+                    type: integer
+                    example: 2
+                  events_id:
+                    type: integer
+                    example: 2
+                  description:
+                    type: string
+                    example: "Ini Sebuah Comment"
+                  
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed to get all comment
+
+  
+    
+    # get:
+    #   tags:
+    #     - Products
+    #   responses:
+    #     "200":
+    #       description: OK
+    #   parameters:
+    #     - in: query
+    #       name: p
+    #       schema:
+    #         type: number
+    #         example: 1
+    #     - in: query
+    #       name: rp
+    #       schema:
+    #         type: number
+    #         example: 1
+    #     - in: query
+    #       name: title
+    #       schema:
+    #         type: string
+    #         example: Sepatu
