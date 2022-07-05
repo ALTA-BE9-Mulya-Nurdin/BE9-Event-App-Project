@@ -20,7 +20,9 @@ type Core struct {
 }
 
 type Business interface {
+	InsertEvent(data Core) (int, error)
 }
 
 type Data interface {
+	InsertEvent(data Core) (int, error)
 }
