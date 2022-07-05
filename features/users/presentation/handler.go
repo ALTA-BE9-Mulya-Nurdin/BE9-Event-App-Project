@@ -10,6 +10,7 @@ import (
 
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserHandler struct {
@@ -98,6 +99,12 @@ func (h *UserHandler) UpdateData(c echo.Context) error {
 	}
 	if updatedData.Password == "" {
 		updatedData.Password = data.Password
+	} else if updatedData.Password != "" {
+		hashedPassword, errHash := bcrypt.GenerateFromPassword([]byte(updatedData.Password), bcrypt.DefaultCost)
+		if errHash != nil {
+			return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("failed to generate password"))
+		}
+		updatedData.Password = string(hashedPassword)
 	}
 	if updatedData.Phone == "" {
 		updatedData.Phone = data.Phone
