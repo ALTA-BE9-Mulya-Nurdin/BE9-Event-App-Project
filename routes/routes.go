@@ -32,5 +32,8 @@ func New(presenter factory.Presenter) *echo.Echo {
 	// Categories
 	e.GET("/categorys", presenter.CategorysPresenter.GetDataAll)
 
+	// Comments
+	e.GET("/comments", presenter.CommentPresenter.GetDataAll)
+
 	return e
 }

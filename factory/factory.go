@@ -1,6 +1,10 @@
 package factory
 
 import (
+	_commentBusiness "be9/event/features/comments/business"
+	_commentData "be9/event/features/comments/data"
+	_commentPresentation "be9/event/features/comments/presentation"
+
 	_categoryBusiness "be9/event/features/categorys/business"
 	_categoryData "be9/event/features/categorys/data"
 	_categoryPresentation "be9/event/features/categorys/presentation"
@@ -23,6 +27,8 @@ type Presenter struct {
 	UserPresenter *_userPresentation.UserHandler
 	// Categories
 	CategorysPresenter *_categoryPresentation.CategoryHandler
+	// Comments
+	CommentPresenter *_commentPresentation.CommentHandler
 }
 
 func InitFactory(dbConn *gorm.DB) Presenter {
@@ -39,9 +45,14 @@ func InitFactory(dbConn *gorm.DB) Presenter {
 	categoryBusiness := _categoryBusiness.NewCategoryBusiness(categoryData)
 	categoryPresentation := _categoryPresentation.NewCategoryHandler(categoryBusiness)
 
+	commentData := _commentData.NewCommentRepository(dbConn)
+	commentBusiness := _commentBusiness.NewCommentBusiness(commentData)
+	commentPresentation := _commentPresentation.NewCommentHandler(commentBusiness)
+
 	return Presenter{
 		AuthPresenter:      authPresentation,
 		UserPresenter:      userPresentation,
 		CategorysPresenter: categoryPresentation,
+		CommentPresenter:   commentPresentation,
 	}
 }
