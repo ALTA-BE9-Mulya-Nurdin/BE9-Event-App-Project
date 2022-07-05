@@ -139,8 +139,8 @@ paths:
                     type: integer
                     example: 1
                   image:
-                      type: string
-                      example: image.jpg
+                    type: string
+                    example: image.jpg
                   username:
                     type: string
                     example: Fajar jahwat
@@ -274,7 +274,7 @@ paths:
                   name:
                     type: string
                     example: IT
-                  
+
         "400":
           description: bad request
           content:
@@ -285,7 +285,6 @@ paths:
                   message:
                     type: string
                     example: failed to get all Category
-
 
   /events:
     get:
@@ -306,8 +305,8 @@ paths:
                     type: integer
                     example: 1
                   categorys_id:
-                      type: integer
-                      example: 1
+                    type: integer
+                    example: 1
                   image:
                     type: string
                     example: Gambar.jpg
@@ -361,12 +360,9 @@ paths:
             schema:
               type: object
               properties:
-                users_id:
-                    type: integer
-                    example: 1
                 categorys_id:
-                    type: integer
-                    example: 1
+                  type: integer
+                  example: 1
                 image:
                   type: string
                   example: Gambar.jpg
@@ -405,23 +401,23 @@ paths:
         "200":
           description: success create
           content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    message:
-                      type: string
-                      example: success to create event
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: success to create event
         "400":
-            description: bad request
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    message:
-                      type: string
-                      example: failed to create event
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed to create event
 
   /events/{id}:
     get:
@@ -450,8 +446,8 @@ paths:
                     type: integer
                     example: 1
                   categorys_id:
-                      type: integer
-                      example: 1
+                    type: integer
+                    example: 1
                   image:
                     type: string
                     example: Gambar.jpg
@@ -573,39 +569,67 @@ paths:
                     example: failed to edit event by id
 
     delete:
-        tags:
-          - Events
-        parameters:
-          - in: path
-            name: id
-            required: true
-            schema:
-              type: integer
-              example: 1
+      tags:
+        - Events
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
 
-        responses:
-          "200":
-            description: success delete
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    message:
-                      type: string
-                      example: success delete event
-          "400":
-            description: bad request
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    message:
-                      type: string
-                      example: failed to delete event
+      responses:
+        "200":
+          description: success delete
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: success delete event
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed to delete event
 
   /event_detail:
+    get:
+      tags:
+        - Event Detail
+      responses:
+        "200":
+          description: success to get all event detail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users_id:
+                    type: integer
+                    example: 2
+                  events_id:
+                    type: integer
+                    example: 2
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed to get all event detail
+
     post:
       tags:
         - Event Detail
@@ -623,49 +647,13 @@ paths:
         "200":
           description: success create
           content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    message:
-                      type: string
-                      example: success to join event
-        "400":
-            description: bad request
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    message:
-                      type: string
-                      example: failed to join event
-
-  /comments:
-    get:
-      tags:
-        - Comments
-      responses:
-        "200":
-          description: success to get all comment
-          content:
             application/json:
               schema:
                 type: object
                 properties:
-                  id:
-                    type: integer
-                    example: 1
-                  users_id:
-                    type: integer
-                    example: 2
-                  events_id:
-                    type: integer
-                    example: 2
-                  description:
+                  message:
                     type: string
-                    example: "Ini Sebuah Comment"
-                  
+                    example: success to join event
         "400":
           description: bad request
           content:
@@ -675,7 +663,39 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: failed to get all comment
+                    example: failed to join event
+
+  /comments:
+    get:
+      tags:
+        - Comments
+      responses:
+        "200":
+          description: success to get all comments
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users_id:
+                    type: integer
+                    example: 2
+                  events_id:
+                    type: integer
+                    example: 2
+                  description:
+                    type: string
+                    example: Ini sebuah acara live coding
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed to get all comments
 
     post:
       tags:
@@ -686,6 +706,9 @@ paths:
             schema:
               type: object
               properties:
+                events_id:
+                  type: integer
+                  example: 1
                 description:
                   type: string
                   example: Ini sebuah acara live coding
@@ -694,30 +717,30 @@ paths:
         "200":
           description: success create
           content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    message:
-                      type: string
-                      example: success to create comment
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: success to create comment
         "400":
-            description: bad request
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    message:
-                      type: string
-                      example: failed to create comment
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed to create comment
   /history_events:
     get:
       tags:
         - History Events
       responses:
         "200":
-          description: success to get all events
+          description: success to get all history events
           content:
             application/json:
               schema:
@@ -729,7 +752,7 @@ paths:
                   events_id:
                     type: integer
                     example: 2
-                  
+
         "400":
           description: bad request
           content:
@@ -739,8 +762,8 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: failed to get all events
-    
+                    example: failed to get all history events
+
     # get:
     #   tags:
     #     - Products
