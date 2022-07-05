@@ -5,6 +5,7 @@ import (
 	"be9/event/features/events/persentation/request"
 	"be9/event/features/events/persentation/response"
 	"be9/event/helper"
+	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"strconv"
@@ -128,68 +129,68 @@ func (handle *EventHandler) DeleteEvent(c echo.Context) error {
 	return c.JSON(http.StatusOK, helper.ResponseSuccessNoData("success to deleted data event"))
 }
 
-//func (handle *EventHandler) UpdateData(c echo.Context) error {
-//	id := c.Param("id")
-//	idEvent, _ := strconv.Atoi(id)
-//	data, _ := handle.eventBisnis.GetEvent(idEvent)
-//	updatedData := request.Event{
-//		Image:       c.FormValue("image"),
-//		Name:        c.FormValue("name"),
-//		Address:     c.FormValue("address"),
-//		Date:        c.FormValue("date"),
-//		Price:       c.FormValue("price"),
-//		Quota:       c.FormValue("quota"),
-//		Longitude:   c.FormValue("longitude"),
-//		Latitude:    c.FormValue("Latitude"),
-//		Link:        c.FormValue("link"),
-//		Description: c.FormValue("description"),
-//		Status:      c.FormValue("status"),
-//	}
-//	if updatedData.Image == "" {
-//		updatedData.Image = data.Image
-//	}
-//	if updatedData.Name == "" {
-//		updatedData.Name = data.Name
-//	}
-//	if updatedData.Address == "" {
-//		updatedData.Address = data.Address
-//	}
-//	if updatedData.Date == "" {
-//		updatedData.Date = data.Date
-//	}
-//	if updatedData.Price == 0 {
-//		updatedData.Price = data.Price
-//	}
-//	if updatedData.Quota == 0 {
-//		updatedData.Quota = data.Quota
-//	}
-//	if updatedData.Longitude == "" {
-//		updatedData.Longitude = data.Longitude
-//	}
-//	if updatedData.Latitude == "" {
-//		updatedData.Latitude = data.Latitude
-//	}
-//	if updatedData.Link == "" {
-//		updatedData.Link = data.Link
-//	}
-//	if updatedData.Description == "" {
-//		updatedData.Description = data.Description
-//	}
-//	if updatedData.Status == "" {
-//		updatedData.Status = data.Status
-//	}
-//	v := validator.New()
-//	errValidator := v.Struct(updatedData)
-//	if errValidator != nil {
-//		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed(errValidator.Error()))
-//	}
-//	newEvent := request.ToCore(updatedData)
-//	row, err := handle.eventBisnis.UpdateEvent(idEvent, newEvent)
-//	if row != 1 {
-//		return c.JSON(http.StatusBadRequest, helper.ResponseFailed("failed to updated data event"))
-//	}
-//	if err != nil {
-//		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed(err.Error()))
-//	}
-//	return c.JSON(http.StatusOK, helper.ResponseSuccessNoData("success to updated data event"))
-//}
+func (handle *EventHandler) UpdateData(c echo.Context) error {
+	id := c.Param("id")
+	idEvent, _ := strconv.Atoi(id)
+	data, _ := handle.eventBisnis.GetEvent(idEvent)
+	updatedData := request.Event{
+		Image:       c.FormValue("image"),
+		Name:        c.FormValue("name"),
+		Address:     c.FormValue("address"),
+		Date:        c.FormValue("date"),
+		Price:       c.FormValue("price"),
+		Quota:       c.FormValue("quota"),
+		Longitude:   c.FormValue("longitude"),
+		Latitude:    c.FormValue("Latitude"),
+		Link:        c.FormValue("link"),
+		Description: c.FormValue("description"),
+		Status:      c.FormValue("status"),
+	}
+	if updatedData.Image == "" {
+		updatedData.Image = data.Image
+	}
+	if updatedData.Name == "" {
+		updatedData.Name = data.Name
+	}
+	if updatedData.Address == "" {
+		updatedData.Address = data.Address
+	}
+	if updatedData.Date == "" {
+		updatedData.Date = data.Date
+	}
+	if updatedData.Price == 0 {
+		updatedData.Price = data.Price
+	}
+	if updatedData.Quota == 0 {
+		updatedData.Quota = data.Quota
+	}
+	if updatedData.Longitude == "" {
+		updatedData.Longitude = data.Longitude
+	}
+	if updatedData.Latitude == "" {
+		updatedData.Latitude = data.Latitude
+	}
+	if updatedData.Link == "" {
+		updatedData.Link = data.Link
+	}
+	if updatedData.Description == "" {
+		updatedData.Description = data.Description
+	}
+	if updatedData.Status == "" {
+		updatedData.Status = data.Status
+	}
+	v := validator.New()
+	errValidator := v.Struct(updatedData)
+	if errValidator != nil {
+		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed(errValidator.Error()))
+	}
+	newEvent := request.ToCore(updatedData)
+	row, err := handle.eventBisnis.UpdateEvent(idEvent, newEvent)
+	if row != 1 {
+		return c.JSON(http.StatusBadRequest, helper.ResponseFailed("failed to updated data event"))
+	}
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed(err.Error()))
+	}
+	return c.JSON(http.StatusOK, helper.ResponseSuccessNoData("success to updated data event"))
+}
