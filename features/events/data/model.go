@@ -3,22 +3,21 @@ package data
 import (
 	"be9/event/features/events"
 	"gorm.io/gorm"
-	"time"
 )
 
 type Event struct {
 	gorm.Model
-	Image       string    `json:"image" form:"image"`
-	Name        string    `json:"name" from:"name"`
-	Address     string    `json:"address" from:"address"`
-	Date        time.Time `json:"date" from:"date"`
-	Price       int       `json:"price" from:"price"`
-	Quota       int       `json:"quota" from:"quota"`
-	Longitude   string    `json:"longitude" from:"longitude"`
-	Latitude    string    `json:"latitude" from:"latitude"`
-	Link        string    `json:"link" from:"link"`
-	Description string    `json:"description" from:"description"`
-	Status      string    `json:"status" from:"status"`
+	Image       string `json:"image" form:"image"`
+	Name        string `json:"name" from:"name"`
+	Address     string `json:"address" from:"address"`
+	Date        string `json:"date" from:"date"`
+	Price       int    `json:"price" from:"price"`
+	Quota       int    `json:"quota" from:"quota"`
+	Longitude   string `json:"longitude" from:"longitude"`
+	Latitude    string `json:"latitude" from:"latitude"`
+	Link        string `json:"link" from:"link"`
+	Description string `json:"description" from:"description"`
+	Status      string `json:"status" from:"status"`
 }
 
 func toCoreList(data []Event) []events.Core {

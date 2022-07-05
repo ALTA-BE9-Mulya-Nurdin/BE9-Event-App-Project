@@ -19,6 +19,22 @@ func New(presenter factory.Presenter) *echo.Echo {
 	e.Pre(middleware.RemoveTrailingSlash())
 
 	// Routes
+	// Users
+	e.POST("/users", presenter.UserPresenter.InsertData)
+	e.GET("/users", presenter.UserPresenter.GetAllData)
+	e.GET("/users/:id", presenter.UserPresenter.GetData)
+	e.DELETE("/users/:id", presenter.UserPresenter.DeleteData)
+	e.PUT("/users/:id", presenter.UserPresenter.UpdateData)
+
+	// Login
+	e.POST("/login", presenter.AuthPresenter.Auth)
+
+	// Event
+	e.POST("/events", presenter.EventPresente.CreateEvent)
+	e.GET("/events", presenter.EventPresente.GetAllEvent)
+	e.GET("/events:id", presenter.EventPresente.GetEvent)
+	e.DELETE("/events/:id", presenter.EventPresente.DeleteEvent)
+	//e.PUT("/events/:id", presenter.EventPresente.Update)
 
 	return e
 }

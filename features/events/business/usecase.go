@@ -2,8 +2,6 @@ package business
 
 import (
 	"be9/event/features/events"
-	"errors"
-	"time"
 )
 
 type eventUsecase struct {
@@ -16,16 +14,27 @@ func NewEventBusiness(evntData events.Data) events.Business {
 	}
 }
 
-func (uc *eventUsecase) InsertEvent(data events.Core) (int, error) {
-	if data.Image == "" || data.Name == "" || data.Address == "" || data.Date == time.Now() || data.Price == 0 ||
-		data.Quota == 0 || data.Longitude == "" || data.Latitude == "" || data.Link == "" || data.Description == "" || data.Status == "" {
-		return -1, errors.New("failed to create event")
-	}
-	row, err := uc.eventData.InsertEvent(data)
+func (uc *eventUsecase) InsertEvent(data events.Core) (row int, err error) {
+	row, err = uc.eventData.InsertEvent(data)
 	return row, err
 }
 
-func (uc *eventUsecase) GetAllEvent(id int) ([]events.Core, error) {
-	rspn, err := uc.eventData.GetAllData(id)
-	return rspn, err
+func (uc *eventUsecase) GetAllEvent() (data []events.Core, err error) {
+	data, err = uc.eventData.GetAllEvent()
+	return data, err
+}
+
+func (uc *eventUsecase) GetEvent(id int) (data events.Core, err error) {
+	data, err = uc.eventData.GetEvent(id)
+	return data, err
+}
+
+func (uc *eventUsecase) DeleteEvent(id int) (row int, err error) {
+	row, err = uc.eventData.DeleteEvent(id)
+	return row, err
+}
+
+func (uc *eventUsecase) UpdateEvent(id int, insert events.Core) (row int, err error) {
+	row, err = uc.eventData.UpdateEvent(id, insert)
+	return row, err
 }
