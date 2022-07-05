@@ -2,7 +2,7 @@
 
 
 ## ERD
-![event-erd](/erd-events/ERD-Event-App-Project.jpg)
+![event-erd](/erd-events/ERD-Event-App-Project-fix.jpg)
 
 
 ## Environment GCS
