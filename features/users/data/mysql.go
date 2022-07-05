@@ -28,3 +28,12 @@ func (repo *mysqlUserRepository) InsertData(insert users.Core) (row int, err err
 	}
 	return int(tx.RowsAffected), nil
 }
+
+func (repo *mysqlUserRepository) GetAllData() (data []users.Core, err error) {
+	var getAllData []User
+	tx := repo.db.Find(&getAllData)
+	if tx.Error != nil {
+		return []users.Core{}, tx.Error
+	}
+	return toCoreList(getAllData), nil
+}

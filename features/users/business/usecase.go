@@ -26,3 +26,8 @@ func (usecase *userUsecase) InsertData(insert users.Core) (row int, err error) {
 	row, err = usecase.userData.InsertData(insert)
 	return row, err
 }
+
+func (usecase *userUsecase) GetAllData() (data []users.Core, err error) {
+	data, err = usecase.userData.GetAllData()
+	return data, err
+}
