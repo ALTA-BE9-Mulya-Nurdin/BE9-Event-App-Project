@@ -1,7 +1,11 @@
 package data
 
 import (
+	"be9/event/features/categorys"
+	_categorys "be9/event/features/categorys/data"
 	"be9/event/features/events"
+	"be9/event/features/users"
+	_users "be9/event/features/users/data"
 
 	"gorm.io/gorm"
 )
@@ -19,6 +23,10 @@ type Events struct {
 	Link        string `json:"link" form:"link"`
 	Description string `json:"description" form:"description"`
 	Status      string `json:"status" form:"status"`
+	UserID      uint   `json:"user_id" form:"user_id"`
+	CategorysID uint   `json:"categorys_id" form:"categorys_id"`
+	User        _users.User
+	Categorys   _categorys.Categorys
 }
 
 func toCoreList(data []Events) []events.Core {
@@ -45,6 +53,18 @@ func (data *Events) toCore() events.Core {
 		Status:      data.Status,
 		CreatedAt:   data.CreatedAt,
 		UpdatedAt:   data.UpdatedAt,
+		User: users.Core{
+			ID:       int(data.User.ID),
+			Image:    data.User.Image,
+			Username: data.User.Username,
+			Email:    data.User.Email,
+			Phone:    data.User.Phone,
+			Address:  data.User.Address,
+		},
+		Categorys: categorys.Core{
+			ID:           int(data.Categorys.ID),
+			CategoryName: data.Categorys.CategoryName,
+		},
 	}
 }
 
@@ -61,5 +81,7 @@ func fromCore(core events.Core) Events {
 		Link:        core.Link,
 		Description: core.Description,
 		Status:      core.Status,
+		UserID:      uint(core.User.ID),
+		CategorysID: uint(core.Categorys.ID),
 	}
 }
