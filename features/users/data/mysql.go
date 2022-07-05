@@ -46,3 +46,15 @@ func (repo *mysqlUserRepository) GetData(id int) (data users.Core, err error) {
 	}
 	return getData.toCore(), nil
 }
+
+func (repo *mysqlUserRepository) DeleteData(id int) (row int, err error) {
+	var getData User
+	tx := repo.db.Unscoped().Delete(&getData, id)
+	if tx.Error != nil {
+		return 0, tx.Error
+	}
+	if tx.RowsAffected != 1 {
+		return 0, fmt.Errorf("failed to deleted data")
+	}
+	return int(tx.RowsAffected), nil
+}

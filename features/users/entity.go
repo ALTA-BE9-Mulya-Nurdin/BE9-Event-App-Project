@@ -18,10 +18,12 @@ type Business interface {
 	InsertData(insert Core) (row int, err error)
 	GetAllData() (data []Core, err error)
 	GetData(id int) (data Core, err error)
+	DeleteData(id int) (row int, err error)
 }
 
 type Data interface {
 	InsertData(insert Core) (row int, err error)
 	GetAllData() (data []Core, err error)
 	GetData(id int) (data Core, err error)
+	DeleteData(id int) (row int, err error)
 }
