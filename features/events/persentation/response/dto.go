@@ -2,23 +2,23 @@ package response
 
 import (
 	"be9/event/features/events"
-	"time"
 )
 
 type Event struct {
-	IDUsers     int       `json:"id_users" from:"id_users"`
-	IDCategory  int       `json:"id_category" from:"id_category"`
-	Image       string    `json:"image" from:"image"`
-	Name        string    `json:"name" from:"name"`
-	Address     string    `json:"address" from:"address"`
-	Date        time.Time `json:"date" from:"date"`
-	Price       int       `json:"price" from:"price"`
-	Quota       int       `json:"quota" from:"quota"`
-	Longitude   string    `json:"longitude" from:"longitude"`
-	Latitude    string    `json:"latitude" from:"latitude"`
-	Link        string    `json:"link" from:"link"`
-	Description string    `json:"description" from:"description"`
-	Status      string    `json:"status" from:"status"`
+	//IDUsers     int    `json:"id_users" from:"id_users"`
+	//IDCategory  int    `json:"id_category" from:"id_category"`
+	ID          string `json:"id" from:"id"`
+	Image       string `json:"image" from:"image"`
+	Name        string `json:"name" from:"name"`
+	Address     string `json:"address" from:"address"`
+	Date        string `json:"date" from:"date"`
+	Price       int    `json:"price" from:"price"`
+	Quota       int    `json:"quota" from:"quota"`
+	Longitude   string `json:"longitude" from:"longitude"`
+	Latitude    string `json:"latitude" from:"latitude"`
+	Link        string `json:"link" from:"link"`
+	Description string `json:"description" from:"description"`
+	Status      string `json:"status" from:"status"`
 }
 
 func FromCoreList(data []events.Core) []Event {
