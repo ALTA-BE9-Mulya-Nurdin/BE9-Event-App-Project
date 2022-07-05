@@ -16,8 +16,10 @@ type Core struct {
 
 type Business interface {
 	InsertData(insert Core) (row int, err error)
+	GetAllData() (data []Core, err error)
 }
 
 type Data interface {
 	InsertData(insert Core) (row int, err error)
+	GetAllData() (data []Core, err error)
 }

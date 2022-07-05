@@ -21,6 +21,7 @@ func New(presenter factory.Presenter) *echo.Echo {
 	// Routes
 	// Users
 	e.POST("/users", presenter.UserPresenter.InsertData)
+	e.GET("/users", presenter.UserPresenter.GetAllData)
 
 	return e
 }

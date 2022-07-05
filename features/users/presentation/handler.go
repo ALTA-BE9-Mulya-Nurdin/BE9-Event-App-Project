@@ -3,6 +3,7 @@ package presentation
 import (
 	"be9/event/features/users"
 	"be9/event/features/users/presentation/request"
+	"be9/event/features/users/presentation/response"
 	"be9/event/helper"
 	"net/http"
 
@@ -40,4 +41,12 @@ func (h *UserHandler) InsertData(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed(err.Error()))
 	}
 	return c.JSON(http.StatusOK, helper.ResponseSuccessNoData("success to insert data"))
+}
+
+func (h *UserHandler) GetAllData(c echo.Context) error {
+	data, err := h.userBusiness.GetAllData()
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("failed to get all data"))
+	}
+	return c.JSON(http.StatusOK, helper.ResponseSuccessWithData("success to get all data", response.FromCoreList(data)))
 }
