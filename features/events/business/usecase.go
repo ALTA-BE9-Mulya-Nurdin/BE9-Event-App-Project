@@ -24,3 +24,8 @@ func (uc *eventUsecase) InsertEvent(data events.Core) (int, error) {
 	row, err := uc.eventData.InsertEvent(data)
 	return row, err
 }
+
+func (uc *eventUsecase) GetAllEvent(id int) ([]events.Core, error) {
+	rspn, err := uc.eventData.GetAllData(id)
+	return rspn, err
+}

@@ -21,8 +21,10 @@ type Core struct {
 
 type Business interface {
 	InsertEvent(data Core) (int, error)
+	//GetAllData(data Core) ([]Core, error)
 }
 
 type Data interface {
 	InsertEvent(data Core) (int, error)
+	//GetAllData(data Core) ([]Core, error)
 }

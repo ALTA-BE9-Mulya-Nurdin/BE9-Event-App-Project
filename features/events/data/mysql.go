@@ -10,6 +10,13 @@ type mysqlEventRepository struct {
 	db *gorm.DB
 }
 
+func NewEventRepository(conn *gorm.DB) events.Data {
+	return &mysqlEventRepository{
+		db: conn,
+	}
+
+}
+
 func (repo *mysqlEventRepository) InsertEventData(input events.Core) (int, error) {
 	event := fromCore(input)
 
@@ -22,11 +29,4 @@ func (repo *mysqlEventRepository) InsertEventData(input events.Core) (int, error
 		return 0, fmt.Errorf("failed to insert input")
 	}
 	return int(res.RowsAffected), nil
-}
-
-func NewEventRepository(conn *gorm.DB) events.Data {
-	return &mysqlEventRepository{
-		db: conn,
-	}
-
 }
