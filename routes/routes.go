@@ -26,5 +26,8 @@ func New(presenter factory.Presenter) *echo.Echo {
 	e.DELETE("/users/:id", presenter.UserPresenter.DeleteData)
 	e.PUT("/users/:id", presenter.UserPresenter.UpdateData)
 
+	// Login
+	e.POST("/login", presenter.AuthPresenter.Auth)
+
 	return e
 }
