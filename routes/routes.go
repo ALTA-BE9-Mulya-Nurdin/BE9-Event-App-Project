@@ -29,5 +29,8 @@ func New(presenter factory.Presenter) *echo.Echo {
 	// Login
 	e.POST("/login", presenter.AuthPresenter.Auth)
 
+	// Categories
+	e.GET("/categorys", presenter.CategorysPresenter.GetDataAll)
+
 	return e
 }
