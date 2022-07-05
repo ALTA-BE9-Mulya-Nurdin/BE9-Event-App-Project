@@ -1,19 +1,23 @@
 package request
 
-import "be9/event/features/events"
+import (
+	"be9/event/features/categorys"
+	"be9/event/features/events"
+)
 
 type Events struct {
-	Image       string `json:"image" form:"image"`
-	Name        string `json:"name" form:"name"`
-	Address     string `json:"address" form:"address"`
-	Date        string `json:"date" form:"date"`
-	Price       int    `json:"price" form:"price"`
-	Quote       int    `json:"quote" form:"quote"`
+	Image       string `json:"image" validate:"required" form:"image"`
+	Name        string `json:"name" validate:"required" form:"name"`
+	Address     string `json:"address" validate:"required" form:"address"`
+	Date        string `json:"date" validate:"required" form:"date"`
+	Price       int    `json:"price" validate:"required" form:"price"`
+	Quote       int    `json:"quote" validate:"required" form:"quote"`
 	Longitude   string `json:"longitude" form:"longitude"`
 	Latitude    string `json:"latitude" form:"latitude"`
 	Link        string `json:"link" form:"link"`
-	Description string `json:"description" form:"description"`
-	Status      string `json:"status" form:"status"`
+	Description string `json:"description" validate:"required" form:"description"`
+	Status      string `json:"status" validate:"required" form:"status"`
+	CategorysID uint   `json:"categorys_id" validate:"required" form:"categorys_id"`
 }
 
 func ToCore(req Events) events.Core {
@@ -29,5 +33,8 @@ func ToCore(req Events) events.Core {
 		Link:        req.Link,
 		Description: req.Description,
 		Status:      req.Status,
+		Categorys: categorys.Core{
+			ID: int(req.CategorysID),
+		},
 	}
 }

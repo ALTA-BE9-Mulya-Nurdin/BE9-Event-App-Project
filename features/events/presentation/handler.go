@@ -5,9 +5,11 @@ import (
 	"be9/event/features/events/presentation/request"
 	"be9/event/features/events/presentation/response"
 	"be9/event/helper"
+	_middlewares "be9/event/middlewares"
 	"net/http"
 	"strconv"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 )
 
@@ -22,10 +24,19 @@ func NewEventHandler(business events.Business) *EventHandler {
 }
 
 func (v *EventHandler) InsertData(c echo.Context) error {
+	idToken, errToken := _middlewares.ExtractToken(c)
+	if errToken != nil {
+		c.JSON(http.StatusBadRequest, helper.ResponseFailed("invalid token"))
+	}
 	var insertData request.Events
 	errBind := c.Bind(&insertData)
 	if errBind != nil {
 		return c.JSON(http.StatusBadRequest, helper.ResponseFailed("failed to bind data, check your input"))
+	}
+	val := validator.New()
+	errValidator := val.Struct(insertData)
+	if errValidator != nil {
+		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed(errValidator.Error()))
 	}
 	newEvent := request.ToCore(insertData)
 	if newEvent.Longitude == "" {
@@ -37,6 +48,7 @@ func (v *EventHandler) InsertData(c echo.Context) error {
 	if newEvent.Link == "" {
 		newEvent.Link = "NULL"
 	}
+	newEvent.User.ID = idToken
 	row, err := v.eventBusiness.InsertData(newEvent)
 	if row != 1 {
 		return c.JSON(http.StatusBadRequest, helper.ResponseFailed("failed to insert data"))
@@ -66,8 +78,16 @@ func (v *EventHandler) GetData(c echo.Context) error {
 }
 
 func (v *EventHandler) DeleteData(c echo.Context) error {
+	idToken, errToken := _middlewares.ExtractToken(c)
+	if errToken != nil {
+		c.JSON(http.StatusBadRequest, helper.ResponseFailed("invalid token"))
+	}
 	id := c.Param("id")
 	idEvent, _ := strconv.Atoi(id)
+	data, _ := v.eventBusiness.GetToken(idEvent, idToken)
+	if data.User.ID != idToken {
+		return c.JSON(http.StatusUnauthorized, helper.ResponseFailed("unauthorized"))
+	}
 	row, err := v.eventBusiness.DeleteData(idEvent)
 	if row != 1 {
 		return c.JSON(http.StatusBadRequest, helper.ResponseFailed("failed to deleted data"))
@@ -79,12 +99,22 @@ func (v *EventHandler) DeleteData(c echo.Context) error {
 }
 
 func (v *EventHandler) UpdateData(c echo.Context) error {
+	idToken, errToken := _middlewares.ExtractToken(c)
+	if errToken != nil {
+		c.JSON(http.StatusBadRequest, helper.ResponseFailed("invalid token"))
+	}
 	id := c.Param("id")
 	idEvent, _ := strconv.Atoi(id)
+	dataToken, _ := v.eventBusiness.GetToken(idEvent, idToken)
+	if dataToken.User.ID != idToken {
+		return c.JSON(http.StatusUnauthorized, helper.ResponseFailed("unauthorized"))
+	}
 	data, _ := v.eventBusiness.GetData(idEvent)
 	priceInt, _ := strconv.Atoi(c.FormValue("price"))
 	quoteInt, _ := strconv.Atoi(c.FormValue("quote"))
+	categorysIDInt, _ := strconv.Atoi(c.FormValue("categorys_id"))
 	updatedData := request.Events{
+		CategorysID: uint(categorysIDInt),
 		Image:       c.FormValue("image"),
 		Name:        c.FormValue("name"),
 		Address:     c.FormValue("address"),
@@ -96,6 +126,9 @@ func (v *EventHandler) UpdateData(c echo.Context) error {
 		Link:        c.FormValue("link"),
 		Description: c.FormValue("description"),
 		Status:      c.FormValue("status"),
+	}
+	if updatedData.CategorysID == 0 {
+		updatedData.CategorysID = uint(data.Categorys.ID)
 	}
 	if updatedData.Image == "" {
 		updatedData.Image = data.Image
@@ -129,6 +162,11 @@ func (v *EventHandler) UpdateData(c echo.Context) error {
 	}
 	if updatedData.Status == "" {
 		updatedData.Status = data.Status
+	}
+	val := validator.New()
+	errValidator := val.Struct(updatedData)
+	if errValidator != nil {
+		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed(errValidator.Error()))
 	}
 	newEvent := request.ToCore(updatedData)
 	row, err := v.eventBusiness.UpdatedData(idEvent, newEvent)

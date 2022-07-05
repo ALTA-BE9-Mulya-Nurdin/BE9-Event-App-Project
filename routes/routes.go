@@ -2,6 +2,7 @@ package routes
 
 import (
 	"be9/event/factory"
+	_middlewares "be9/event/middlewares"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -36,11 +37,11 @@ func New(presenter factory.Presenter) *echo.Echo {
 	// Comments
 	e.GET("/comments", presenter.CommentPresenter.GetDataAll)
 	// Events
-	e.POST("/events", presenter.EventPresenter.InsertData)
-	e.GET("/events", presenter.EventPresenter.GetAllData)
-	e.GET("/events/:id", presenter.EventPresenter.GetData)
-	e.DELETE("events/:id", presenter.EventPresenter.DeleteData)
-	e.PUT("/events/:id", presenter.EventPresenter.UpdateData)
+	e.POST("/events", presenter.EventPresenter.InsertData, _middlewares.JWTMiddleware())
+	e.GET("/events", presenter.EventPresenter.GetAllData, _middlewares.JWTMiddleware())
+	e.GET("/events/:id", presenter.EventPresenter.GetData, _middlewares.JWTMiddleware())
+	e.DELETE("events/:id", presenter.EventPresenter.DeleteData, _middlewares.JWTMiddleware())
+	e.PUT("/events/:id", presenter.EventPresenter.UpdateData, _middlewares.JWTMiddleware())
 
 	return e
 }

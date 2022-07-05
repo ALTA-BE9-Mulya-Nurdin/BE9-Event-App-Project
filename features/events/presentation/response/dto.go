@@ -1,7 +1,9 @@
 package response
 
 import (
+	_categorys "be9/event/features/categorys/presentation/response"
 	"be9/event/features/events"
+	_users "be9/event/features/users/presentation/response"
 	"time"
 )
 
@@ -19,6 +21,8 @@ type Events struct {
 	Description string    `json:"description"`
 	Status      string    `json:"status"`
 	CreatedAt   time.Time `json:"created_at"`
+	User        _users.User
+	Categorys   _categorys.Categorys
 }
 
 func FromCoreList(data []events.Core) []Events {
@@ -44,5 +48,17 @@ func FromCore(data events.Core) Events {
 		Description: data.Description,
 		Status:      data.Status,
 		CreatedAt:   data.CreatedAt,
+		User: _users.User{
+			ID:       data.User.ID,
+			Image:    data.User.Image,
+			Username: data.User.Username,
+			Email:    data.User.Email,
+			Phone:    data.User.Phone,
+			Address:  data.User.Address,
+		},
+		Categorys: _categorys.Categorys{
+			ID:           data.Categorys.ID,
+			CategoryName: data.Categorys.CategoryName,
+		},
 	}
 }

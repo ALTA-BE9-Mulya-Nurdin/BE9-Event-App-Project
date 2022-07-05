@@ -31,7 +31,7 @@ func (repo *mysqlEventRepository) InsertData(insert events.Core) (row int, err e
 
 func (repo *mysqlEventRepository) GetAllData() (data []events.Core, err error) {
 	var getAllData []Events
-	tx := repo.db.Find(&getAllData)
+	tx := repo.db.Preload("User").Preload("Categorys").Find(&getAllData)
 	if tx.Error != nil {
 		return []events.Core{}, tx.Error
 	}
@@ -40,7 +40,7 @@ func (repo *mysqlEventRepository) GetAllData() (data []events.Core, err error) {
 
 func (repo *mysqlEventRepository) GetData(id int) (data events.Core, err error) {
 	var getData Events
-	tx := repo.db.First(&getData, id)
+	tx := repo.db.Preload("User").Preload("Categorys").First(&getData, id)
 	if tx.Error != nil {
 		return events.Core{}, tx.Error
 	}
@@ -68,4 +68,16 @@ func (repo *mysqlEventRepository) UpdatedData(id int, insert events.Core) (row i
 		return 0, fmt.Errorf("failed to updated data")
 	}
 	return int(tx.RowsAffected), nil
+}
+
+func (repo *mysqlEventRepository) GetToken(id int, idToken int) (data events.Core, err error) {
+	var getData Events
+	tx := repo.db.Preload("User").Preload("Categorys").First(&getData, id)
+	if tx.Error != nil {
+		return events.Core{}, tx.Error
+	}
+	if getData.toCore().User.ID != idToken {
+		return events.Core{}, err
+	}
+	return getData.toCore(), nil
 }
