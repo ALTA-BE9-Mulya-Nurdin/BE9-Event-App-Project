@@ -21,7 +21,7 @@ jobs:
             whoami
             git pull origin main
             docker kill $(docker ps -q)
-            docker rm $(docker ps -a -q)
-            docker rmi $(docker images -q)
+            docker rm appEventContainer
+            docker rm appEventContainer
             docker build -t apps-event:latest .
             docker run -d -p 8000:8000 -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e DB_PORT=${{ secrets.DB_PORT }} -e DB_HOST=${{ secrets.DB_HOST }} -e DB_NAME=${{ secrets.DB_NAME }} --name appEventContainer apps-event:latest
