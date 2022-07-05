@@ -19,6 +19,8 @@ func New(presenter factory.Presenter) *echo.Echo {
 	e.Pre(middleware.RemoveTrailingSlash())
 
 	// Routes
+	// Users
+	e.POST("/users", presenter.UserPresenter.InsertData)
 
 	return e
 }
