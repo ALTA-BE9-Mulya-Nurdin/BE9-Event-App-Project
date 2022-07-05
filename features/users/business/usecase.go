@@ -31,3 +31,8 @@ func (usecase *userUsecase) GetAllData() (data []users.Core, err error) {
 	data, err = usecase.userData.GetAllData()
 	return data, err
 }
+
+func (usecase *userUsecase) GetData(id int) (data users.Core, err error) {
+	data, err = usecase.userData.GetData(id)
+	return data, err
+}

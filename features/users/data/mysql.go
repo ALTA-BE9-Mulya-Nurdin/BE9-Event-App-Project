@@ -37,3 +37,12 @@ func (repo *mysqlUserRepository) GetAllData() (data []users.Core, err error) {
 	}
 	return toCoreList(getAllData), nil
 }
+
+func (repo *mysqlUserRepository) GetData(id int) (data users.Core, err error) {
+	var getData User
+	tx := repo.db.First(&getData, id)
+	if tx.Error != nil {
+		return users.Core{}, tx.Error
+	}
+	return getData.toCore(), nil
+}
