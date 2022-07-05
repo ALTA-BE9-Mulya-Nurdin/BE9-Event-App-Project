@@ -74,3 +74,49 @@ func (h *UserHandler) DeleteData(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, helper.ResponseSuccessNoData("success to deleted data"))
 }
+
+func (h *UserHandler) UpdateData(c echo.Context) error {
+	id := c.Param("id")
+	idUser, _ := strconv.Atoi(id)
+	data, _ := h.userBusiness.GetData(idUser)
+	updatedData := request.User{
+		Image:    c.FormValue("image"),
+		Username: c.FormValue("username"),
+		Email:    c.FormValue("email"),
+		Password: c.FormValue("password"),
+		Phone:    c.FormValue("phone"),
+		Address:  c.FormValue("address"),
+	}
+	if updatedData.Image == "" {
+		updatedData.Image = data.Image
+	}
+	if updatedData.Username == "" {
+		updatedData.Username = data.Username
+	}
+	if updatedData.Email == "" {
+		updatedData.Email = data.Email
+	}
+	if updatedData.Password == "" {
+		updatedData.Password = data.Password
+	}
+	if updatedData.Phone == "" {
+		updatedData.Phone = data.Phone
+	}
+	if updatedData.Address == "" {
+		updatedData.Address = data.Address
+	}
+	v := validator.New()
+	errValidator := v.Struct(updatedData)
+	if errValidator != nil {
+		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed(errValidator.Error()))
+	}
+	newUser := request.ToCore(updatedData)
+	row, err := h.userBusiness.UpdateData(idUser, newUser)
+	if row != 1 {
+		return c.JSON(http.StatusBadRequest, helper.ResponseFailed("failed to updated data"))
+	}
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed(err.Error()))
+	}
+	return c.JSON(http.StatusOK, helper.ResponseSuccessNoData("success to updated data"))
+}

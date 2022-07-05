@@ -41,3 +41,8 @@ func (usecase *userUsecase) DeleteData(id int) (row int, err error) {
 	row, err = usecase.userData.DeleteData(id)
 	return row, err
 }
+
+func (usecase *userUsecase) UpdateData(id int, insert users.Core) (row int, err error) {
+	row, err = usecase.userData.UpdateData(id, insert)
+	return row, err
+}

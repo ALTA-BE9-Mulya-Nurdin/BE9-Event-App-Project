@@ -19,6 +19,7 @@ type Business interface {
 	GetAllData() (data []Core, err error)
 	GetData(id int) (data Core, err error)
 	DeleteData(id int) (row int, err error)
+	UpdateData(id int, insert Core) (row int, err error)
 }
 
 type Data interface {
@@ -26,4 +27,5 @@ type Data interface {
 	GetAllData() (data []Core, err error)
 	GetData(id int) (data Core, err error)
 	DeleteData(id int) (row int, err error)
+	UpdateData(id int, insert Core) (row int, err error)
 }

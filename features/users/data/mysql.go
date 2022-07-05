@@ -58,3 +58,14 @@ func (repo *mysqlUserRepository) DeleteData(id int) (row int, err error) {
 	}
 	return int(tx.RowsAffected), nil
 }
+
+func (repo *mysqlUserRepository) UpdateData(id int, insert users.Core) (row int, err error) {
+	tx := repo.db.Model(&User{}).Where("id = ?", id).Updates(User{Image: insert.Image, Username: insert.Username, Email: insert.Email, Password: insert.Password, Phone: insert.Phone, Address: insert.Address})
+	if tx.Error != nil {
+		return 0, tx.Error
+	}
+	if tx.RowsAffected != 1 {
+		return 0, fmt.Errorf("failed to updated data")
+	}
+	return int(tx.RowsAffected), nil
+}

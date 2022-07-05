@@ -24,6 +24,7 @@ func New(presenter factory.Presenter) *echo.Echo {
 	e.GET("/users", presenter.UserPresenter.GetAllData)
 	e.GET("/users/:id", presenter.UserPresenter.GetData)
 	e.DELETE("/users/:id", presenter.UserPresenter.DeleteData)
+	e.PUT("/users/:id", presenter.UserPresenter.UpdateData)
 
 	return e
 }
