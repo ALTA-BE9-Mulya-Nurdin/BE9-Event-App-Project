@@ -20,5 +20,8 @@ func New(presenter factory.Presenter) *echo.Echo {
 
 	// Routes
 
+	// Login
+	e.POST("/login", presenter.AuthPresenter.Auth)
+
 	return e
 }
