@@ -61,3 +61,16 @@ func (h *UserHandler) GetData(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, helper.ResponseSuccessWithData("success to get data", response.FromCore(data)))
 }
+
+func (h *UserHandler) DeleteData(c echo.Context) error {
+	id := c.Param("id")
+	idUser, _ := strconv.Atoi(id)
+	row, err := h.userBusiness.DeleteData(idUser)
+	if row != 1 {
+		return c.JSON(http.StatusBadRequest, helper.ResponseFailed("failed to deleted data"))
+	}
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed(err.Error()))
+	}
+	return c.JSON(http.StatusOK, helper.ResponseSuccessNoData("success to deleted data"))
+}
