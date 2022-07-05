@@ -33,6 +33,8 @@ func New(presenter factory.Presenter) *echo.Echo {
 	// Categories
 	e.GET("/categorys", presenter.CategorysPresenter.GetDataAll)
 
+	// Comments
+	e.GET("/comments", presenter.CommentPresenter.GetDataAll)
 	// Events
 	e.POST("/events", presenter.EventPresenter.InsertData)
 	e.GET("/events", presenter.EventPresenter.GetAllData)
