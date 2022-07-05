@@ -21,8 +21,10 @@ type Core struct {
 
 type Business interface {
 	GetDataAll() (data []Core, err error)
+	InsertComment(insert Core) (row int, err error)
 }
 
 type Data interface {
 	GetDataAll() (data []Core, err error)
+	InsertComment(insert Core) (row int, err error)
 }

@@ -35,6 +35,8 @@ func New(presenter factory.Presenter) *echo.Echo {
 
 	// Comments
 	e.GET("/comments", presenter.CommentPresenter.GetDataAll)
+	e.POST("/comments", presenter.CommentPresenter.InsertComment)
+
 	// Events
 	e.POST("/events", presenter.EventPresenter.InsertData)
 	e.GET("/events", presenter.EventPresenter.GetAllData)

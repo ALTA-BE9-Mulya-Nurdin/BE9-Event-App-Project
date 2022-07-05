@@ -18,3 +18,8 @@ func (uc *commentUseCase) GetDataAll() (data []comments.Core, err error) {
 	data, err = uc.commentData.GetDataAll()
 	return data, err
 }
+
+func (uc *commentUseCase) InsertComment(insert comments.Core) (row int, err error) {
+	row, err = uc.commentData.InsertComment(insert)
+	return row, err
+}

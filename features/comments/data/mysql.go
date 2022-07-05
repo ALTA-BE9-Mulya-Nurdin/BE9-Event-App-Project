@@ -24,3 +24,12 @@ func (repo *mysqlCommentRepository) GetDataAll() (data []comments.Core, err erro
 	}
 	return toCoreList(getAllComment), nil
 }
+
+func (repo *mysqlCommentRepository) InsertComment(insert comments.Core) (row int, err error) {
+	insertComment := fromCore(insert)
+	tx := repo.db.Create(&insertComment)
+	if tx.Error != nil {
+		return 0, tx.Error
+	}
+	return int(tx.RowsAffected), nil
+}
