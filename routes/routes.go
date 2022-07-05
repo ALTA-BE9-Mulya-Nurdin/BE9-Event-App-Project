@@ -22,6 +22,7 @@ func New(presenter factory.Presenter) *echo.Echo {
 	// Users
 	e.POST("/users", presenter.UserPresenter.InsertData)
 	e.GET("/users", presenter.UserPresenter.GetAllData)
+	e.GET("/users/:id", presenter.UserPresenter.GetData)
 
 	return e
 }
