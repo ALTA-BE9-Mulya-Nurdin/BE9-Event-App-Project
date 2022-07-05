@@ -7,10 +7,11 @@ import (
 	"be9/event/helper"
 	_middlewares "be9/event/middlewares"
 
+	"github.com/go-playground/validator/v10"
+
 	"net/http"
 
-	"github.com/go-playground/validator"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 type AuthHandler struct {
