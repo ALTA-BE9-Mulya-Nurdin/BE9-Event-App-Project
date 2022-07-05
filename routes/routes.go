@@ -19,6 +19,7 @@ func New(presenter factory.Presenter) *echo.Echo {
 	e.Pre(middleware.RemoveTrailingSlash())
 
 	// Routes
+
 	// Users
 	e.POST("/users", presenter.UserPresenter.InsertData)
 	e.GET("/users", presenter.UserPresenter.GetAllData)
@@ -34,6 +35,12 @@ func New(presenter factory.Presenter) *echo.Echo {
 
 	// Comments
 	e.GET("/comments", presenter.CommentPresenter.GetDataAll)
+	// Events
+	e.POST("/events", presenter.EventPresenter.InsertData)
+	e.GET("/events", presenter.EventPresenter.GetAllData)
+	e.GET("/events/:id", presenter.EventPresenter.GetData)
+	e.DELETE("events/:id", presenter.EventPresenter.DeleteData)
+	e.PUT("/events/:id", presenter.EventPresenter.UpdateData)
 
 	return e
 }
