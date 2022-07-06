@@ -212,7 +212,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: success edit user by id
+                    example: success edit user
         "400":
           description: bad request
           content:
@@ -222,7 +222,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: failed to edit user by id
+                    example: failed to edit user
     delete:
       tags:
         - Users
@@ -266,14 +266,16 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    example: 1
-                  name:
-                    type: string
-                    example: IT
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: IT
 
         "400":
           description: bad request
@@ -296,50 +298,52 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    example: 1
-                  users_id:
-                    type: integer
-                    example: 1
-                  categorys_id:
-                    type: integer
-                    example: 1
-                  image:
-                    type: string
-                    example: Gambar.jpg
-                  name:
-                    type: string
-                    example: Live Coding
-                  address:
-                    type: string
-                    example: jakarta, Blok M 15
-                  date:
-                    type: string
-                    example: 07-07-2022
-                  price:
-                    type: integer
-                    example: 100000
-                  quota:
-                    type: integer
-                    example: 100
-                  longtitude:
-                    type: string
-                    example: -38.44
-                  latitude:
-                    type: string
-                    example: -38.44
-                  link:
-                    type: string
-                    example: https://meet.google.com
-                  description:
-                    type: string
-                    example: Ini sebuah acara live coding
-                  status:
-                    type: string
-                    example: online
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    users_id:
+                      type: integer
+                      example: 1
+                    categorys_id:
+                      type: integer
+                      example: 1
+                    image:
+                      type: string
+                      example: Gambar.jpg
+                    name:
+                      type: string
+                      example: Live Coding
+                    address:
+                      type: string
+                      example: jakarta, Blok M 15
+                    date:
+                      type: string
+                      example: 07-07-2022
+                    price:
+                      type: integer
+                      example: 100000
+                    quota:
+                      type: integer
+                      example: 100
+                    longtitude:
+                      type: string
+                      example: -38.44
+                    latitude:
+                      type: string
+                      example: -38.44
+                    link:
+                      type: string
+                      example: https://meet.google.com
+                    description:
+                      type: string
+                      example: Ini sebuah acara live coding
+                    status:
+                      type: string
+                      example: online
         "400":
           description: bad request
           content:
@@ -601,24 +605,26 @@ paths:
                     type: string
                     example: failed to delete event
 
-  /event_detail:
+  /participants:
     get:
       tags:
-        - Event Detail
+        - Participants
       responses:
         "200":
-          description: success to get all event detail
+          description: success to get all participants
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  users_id:
-                    type: integer
-                    example: 2
-                  events_id:
-                    type: integer
-                    example: 2
+                type: array
+                items:
+                  type: object
+                  properties:
+                    users_id:
+                      type: integer
+                      example: 2
+                    events_id:
+                      type: integer
+                      example: 2
         "400":
           description: bad request
           content:
@@ -628,11 +634,11 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: failed to get all event detail
+                    example: failed to get all participants
 
     post:
       tags:
-        - Event Detail
+        - Participants
       requestBody:
         content:
           application/json:
@@ -675,17 +681,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  users_id:
-                    type: integer
-                    example: 2
-                  events_id:
-                    type: integer
-                    example: 2
-                  description:
-                    type: string
-                    example: Ini sebuah acara live coding
+                type: array
+                items:
+                  type: object
+                  properties:
+                    users_id:
+                      type: integer
+                      example: 2
+                    events_id:
+                      type: integer
+                      example: 2
+                    description:
+                      type: string
+                      example: Ini sebuah komentar
         "400":
           description: bad request
           content:
@@ -744,14 +752,16 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  users_id:
-                    type: integer
-                    example: 2
-                  events_id:
-                    type: integer
-                    example: 2
+                type: array
+                items:
+                  type: object
+                  properties:
+                    users_id:
+                      type: integer
+                      example: 2
+                    events_id:
+                      type: integer
+                      example: 2
 
         "400":
           description: bad request

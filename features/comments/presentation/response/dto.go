@@ -9,8 +9,17 @@ type Comments struct {
 	ID          int       `json:"id"`
 	Description string    `json:"description"`
 	CreatedAt   time.Time `json:"created_at"`
-	// User User
-	// Event Event
+	User        User
+	Event       Event
+}
+
+type User struct {
+	ID       int    `json:"id"`
+	Username string `json:"username"`
+}
+
+type Event struct {
+	ID int `json:"id"`
 }
 
 func FromCore(data comments.Core) Comments {

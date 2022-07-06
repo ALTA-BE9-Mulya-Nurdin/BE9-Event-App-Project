@@ -35,6 +35,7 @@ func New(presenter factory.Presenter) *echo.Echo {
 	e.GET("/categorys", presenter.CategorysPresenter.GetDataAll)
 
 	// Comments
+	e.POST("/comments", presenter.CommentPresenter.InsertComment, _middlewares.JWTMiddleware())
 	e.GET("/comments", presenter.CommentPresenter.GetDataAll, _middlewares.JWTMiddleware())
 
 	// Events
