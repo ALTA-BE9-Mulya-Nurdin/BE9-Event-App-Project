@@ -114,58 +114,6 @@ paths:
                   message:
                     type: string
                     example: failed to create user
-
-  /users/{id}:
-    get:
-      tags:
-        - Users
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-            example: 1
-
-      responses:
-        "200":
-          description: success to get user by id
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    example: 1
-                  image:
-                    type: string
-                    example: image.jpg
-                  username:
-                    type: string
-                    example: Fajar jahwat
-                  email:
-                    type: string
-                    example: fajar@gmail.com
-                  password:
-                    type: string
-                    example: qwerty123
-                  phone:
-                    type: string
-                    example: 0812345678
-                  address:
-                    type: string
-                    example: jakarta, Blok M 15
-        "400":
-          description: bad request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: failed to get user by id
     put:
       tags:
         - Users
@@ -255,6 +203,52 @@ paths:
                   message:
                     type: string
                     example: failed to delete user
+
+  /users/profile:
+    get:
+      tags:
+        - Users
+
+      responses:
+        "200":
+          description: success to get data logged user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  image:
+                    type: string
+                    example: image.jpg
+                  username:
+                    type: string
+                    example: Fajar jahwat
+                  email:
+                    type: string
+                    example: fajar@gmail.com
+                  password:
+                    type: string
+                    example: qwerty123
+                  phone:
+                    type: string
+                    example: 0812345678
+                  address:
+                    type: string
+                    example: jakarta, Blok M 15
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed to get user by id
+    
 
   /categorys:
     get:
@@ -437,7 +431,7 @@ paths:
 
       responses:
         "200":
-          description: success to get user by id
+          description: success to get event by id
           content:
             application/json:
               schema:
@@ -604,6 +598,74 @@ paths:
                   message:
                     type: string
                     example: failed to delete event
+  ##########
+  /user/events:
+    get:
+      tags:
+        - Events
+
+      responses:
+        "200":
+          description: success to get event with logged user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    users_id:
+                      type: integer
+                      example: 1
+                    categorys_id:
+                      type: integer
+                      example: 1
+                    image:
+                      type: string
+                      example: Gambar.jpg
+                    name:
+                      type: string
+                      example: Live Coding
+                    address:
+                      type: string
+                      example: jakarta, Blok M 15
+                    date:
+                      type: string
+                      example: 07-07-2022
+                    price:
+                      type: integer
+                      example: 100000
+                    quota:
+                      type: integer
+                      example: 100
+                    longtitude:
+                      type: string
+                      example: -38.44
+                    latitude:
+                      type: string
+                      example: -38.44
+                    link:
+                      type: string
+                      example: https://meet.google.com
+                    description:
+                      type: string
+                      example: Ini sebuah acara live coding
+                    status:
+                      type: string
+                      example: online
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed to get event by id
 
   /participants:
     get:
