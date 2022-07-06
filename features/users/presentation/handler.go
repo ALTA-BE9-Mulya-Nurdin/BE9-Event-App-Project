@@ -35,6 +35,7 @@ func (h *UserHandler) InsertData(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed(errValidator.Error()))
 	}
 	newUser := request.ToCore(insertData)
+	newUser.Image = "image.jpg"
 	row, err := h.userBusiness.InsertData(newUser)
 	if row != 1 {
 		return c.JSON(http.StatusBadRequest, helper.ResponseFailed("failed to insert data"))
