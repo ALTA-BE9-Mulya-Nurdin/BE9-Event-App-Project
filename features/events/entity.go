@@ -33,7 +33,6 @@ type Business interface {
 	UpdatedData(id int, insert Core) (row int, err error)
 	GetToken(id int, idToken int) (data Core, err error)
 	GetDataUserEvent(idToken int) (data []Core, err error)
-	GetDataHistoryEvent(idToken int) (data []Core, err error)
 }
 
 type Data interface {
@@ -44,5 +43,4 @@ type Data interface {
 	UpdatedData(id int, insert Core) (row int, err error)
 	GetToken(id int, idToken int) (data Core, err error)
 	GetDataUserEvent(idToken int) (data []Core, err error)
-	GetDataHistoryEvent(idToken int) (data []Core, err error)
 }

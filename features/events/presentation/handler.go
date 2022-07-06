@@ -200,15 +200,3 @@ func (v *EventHandler) GetDataUserEvent(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, helper.ResponseSuccessWithData("success to get all data", response.FromCoreList(data)))
 }
-
-func (v *EventHandler) GetDataHistoryEvent(c echo.Context) error {
-	idToken, errToken := _middlewares.ExtractToken(c)
-	if errToken != nil {
-		c.JSON(http.StatusBadRequest, helper.ResponseFailed("invalid token"))
-	}
-	data, err := v.eventBusiness.GetDataHistoryEvent(idToken)
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("failed to get all data"))
-	}
-	return c.JSON(http.StatusOK, helper.ResponseSuccessWithData("success to get all data", response.FromCoreList(data)))
-}
