@@ -5,8 +5,8 @@ import (
 	"be9/event/features/users/presentation/request"
 	"be9/event/features/users/presentation/response"
 	"be9/event/helper"
+	_middlewares "be9/event/middlewares"
 	"net/http"
-	"strconv"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
@@ -55,9 +55,11 @@ func (h *UserHandler) GetAllData(c echo.Context) error {
 }
 
 func (h *UserHandler) GetData(c echo.Context) error {
-	id := c.Param("id")
-	idUser, _ := strconv.Atoi(id)
-	data, err := h.userBusiness.GetData(idUser)
+	idToken, errToken := _middlewares.ExtractToken(c)
+	if errToken != nil {
+		c.JSON(http.StatusBadRequest, helper.ResponseFailed("invalid token"))
+	}
+	data, err := h.userBusiness.GetData(idToken)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("failed to get data"))
 	}
@@ -65,9 +67,11 @@ func (h *UserHandler) GetData(c echo.Context) error {
 }
 
 func (h *UserHandler) DeleteData(c echo.Context) error {
-	id := c.Param("id")
-	idUser, _ := strconv.Atoi(id)
-	row, err := h.userBusiness.DeleteData(idUser)
+	idToken, errToken := _middlewares.ExtractToken(c)
+	if errToken != nil {
+		c.JSON(http.StatusBadRequest, helper.ResponseFailed("invalid token"))
+	}
+	row, err := h.userBusiness.DeleteData(idToken)
 	if row != 1 {
 		return c.JSON(http.StatusBadRequest, helper.ResponseFailed("failed to deleted data"))
 	}
@@ -78,9 +82,11 @@ func (h *UserHandler) DeleteData(c echo.Context) error {
 }
 
 func (h *UserHandler) UpdateData(c echo.Context) error {
-	id := c.Param("id")
-	idUser, _ := strconv.Atoi(id)
-	data, _ := h.userBusiness.GetData(idUser)
+	idToken, errToken := _middlewares.ExtractToken(c)
+	if errToken != nil {
+		c.JSON(http.StatusBadRequest, helper.ResponseFailed("invalid token"))
+	}
+	data, _ := h.userBusiness.GetData(idToken)
 	updatedData := request.User{
 		Image:    c.FormValue("image"),
 		Username: c.FormValue("username"),
@@ -119,7 +125,7 @@ func (h *UserHandler) UpdateData(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed(errValidator.Error()))
 	}
 	newUser := request.ToCore(updatedData)
-	row, err := h.userBusiness.UpdateData(idUser, newUser)
+	row, err := h.userBusiness.UpdateData(idToken, newUser)
 	if row != 1 {
 		return c.JSON(http.StatusBadRequest, helper.ResponseFailed("failed to updated data"))
 	}

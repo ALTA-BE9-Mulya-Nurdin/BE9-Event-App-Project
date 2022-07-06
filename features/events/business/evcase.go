@@ -41,3 +41,8 @@ func (evcase *eventUsecase) GetToken(id int, idToken int) (data events.Core, err
 	data, err = evcase.eventData.GetToken(id, idToken)
 	return data, err
 }
+
+func (evcase *eventUsecase) GetDataUserEvent(idToken int) (data []events.Core, err error) {
+	data, err = evcase.eventData.GetDataUserEvent(idToken)
+	return data, err
+}

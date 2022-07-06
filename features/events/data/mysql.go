@@ -81,3 +81,12 @@ func (repo *mysqlEventRepository) GetToken(id int, idToken int) (data events.Cor
 	}
 	return getData.toCore(), nil
 }
+
+func (repo *mysqlEventRepository) GetDataUserEvent(idToken int) (data []events.Core, err error) {
+	var getDataEvents []Events
+	tx := repo.db.Where("user_id = ?", idToken).Preload("User").Preload("Categorys").Find(&getDataEvents)
+	if tx.Error != nil {
+		return []events.Core{}, tx.Error
+	}
+	return toCoreList(getDataEvents), nil
+}

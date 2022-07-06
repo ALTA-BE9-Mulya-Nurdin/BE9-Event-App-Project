@@ -178,3 +178,15 @@ func (v *EventHandler) UpdateData(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, helper.ResponseSuccessNoData("success to updated data"))
 }
+
+func (v *EventHandler) GetDataUserEvent(c echo.Context) error {
+	idToken, errToken := _middlewares.ExtractToken(c)
+	if errToken != nil {
+		c.JSON(http.StatusBadRequest, helper.ResponseFailed("invalid token"))
+	}
+	data, err := v.eventBusiness.GetDataUserEvent(idToken)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("failed to get all data"))
+	}
+	return c.JSON(http.StatusOK, helper.ResponseSuccessWithData("success to get all data", response.FromCoreList(data)))
+}
