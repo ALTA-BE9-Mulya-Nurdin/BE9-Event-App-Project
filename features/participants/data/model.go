@@ -1,16 +1,16 @@
 package data
 
 import (
-	"be9/event/features/eventdetail"
 	"be9/event/features/events"
 	_events "be9/event/features/events/data"
+	"be9/event/features/participants"
 	"be9/event/features/users"
 	_users "be9/event/features/users/data"
 
 	"gorm.io/gorm"
 )
 
-type EventDetail struct {
+type Participants struct {
 	gorm.Model
 	UserID   uint `json:"user_id" form:"user_id"`
 	EventsID uint `json:"events_id" form:"events_id"`
@@ -18,16 +18,16 @@ type EventDetail struct {
 	Events   _events.Events
 }
 
-func toCoreList(data []EventDetail) []eventdetail.Core {
-	result := []eventdetail.Core{}
+func toCoreList(data []Participants) []participants.Core {
+	result := []participants.Core{}
 	for key := range data {
 		result = append(result, data[key].toCore())
 	}
 	return result
 }
 
-func (data *EventDetail) toCore() eventdetail.Core {
-	return eventdetail.Core{
+func (data *Participants) toCore() participants.Core {
+	return participants.Core{
 		ID:        int(data.ID),
 		CreatedAt: data.CreatedAt,
 		UpdatedAt: data.UpdatedAt,
@@ -56,8 +56,8 @@ func (data *EventDetail) toCore() eventdetail.Core {
 	}
 }
 
-func fromCore(core eventdetail.Core) EventDetail {
-	return EventDetail{
+func fromCore(core participants.Core) Participants {
+	return Participants{
 		UserID:   uint(core.User.ID),
 		EventsID: uint(core.Events.ID),
 	}

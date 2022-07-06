@@ -1,16 +1,16 @@
 package request
 
 import (
-	"be9/event/features/eventdetail"
 	"be9/event/features/events"
+	"be9/event/features/participants"
 )
 
-type EventDetail struct {
+type Participants struct {
 	EventsID uint `json:"events_id" form:"events_id"`
 }
 
-func ToCore(req EventDetail) eventdetail.Core {
-	return eventdetail.Core{
+func ToCore(req Participants) participants.Core {
+	return participants.Core{
 		Events: events.Core{
 			ID: int(req.EventsID),
 		},

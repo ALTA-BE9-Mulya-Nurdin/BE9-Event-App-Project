@@ -1,4 +1,4 @@
-package eventdetail
+package participants
 
 import (
 	"be9/event/features/events"
@@ -15,9 +15,7 @@ type Core struct {
 }
 
 type Business interface {
-	// GetData(idToken int, idEvent int) (row int, err error)
 }
 
 type Data interface {
-	// GetData(idToken int, idEvent int) (row int, err error)
 }
