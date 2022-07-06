@@ -29,6 +29,7 @@ func (h *UserHandler) InsertData(c echo.Context) error {
 	if errBind != nil {
 		return c.JSON(http.StatusBadRequest, helper.ResponseFailed("failed to bind data, check your input"))
 	}
+	insertData.Image = "image.jpg"
 	v := validator.New()
 	errValidator := v.Struct(insertData)
 	if errValidator != nil {

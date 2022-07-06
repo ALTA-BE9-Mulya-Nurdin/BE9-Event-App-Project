@@ -36,3 +36,8 @@ func (evcase *eventUsecase) UpdatedData(id int, insert events.Core) (row int, er
 	row, err = evcase.eventData.UpdatedData(id, insert)
 	return row, err
 }
+
+func (evcase *eventUsecase) GetToken(id int, idToken int) (data events.Core, err error) {
+	data, err = evcase.eventData.GetToken(id, idToken)
+	return data, err
+}

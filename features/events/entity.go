@@ -1,6 +1,10 @@
 package events
 
-import "time"
+import (
+	"be9/event/features/categorys"
+	"be9/event/features/users"
+	"time"
+)
 
 type Core struct {
 	ID          int
@@ -17,6 +21,8 @@ type Core struct {
 	Status      string
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
+	User        users.Core
+	Categorys   categorys.Core
 }
 
 type Business interface {
@@ -25,6 +31,7 @@ type Business interface {
 	GetData(id int) (data Core, err error)
 	DeleteData(id int) (row int, err error)
 	UpdatedData(id int, insert Core) (row int, err error)
+	GetToken(id int, idToken int) (data Core, err error)
 }
 
 type Data interface {
@@ -33,4 +40,5 @@ type Data interface {
 	GetData(id int) (data Core, err error)
 	DeleteData(id int) (row int, err error)
 	UpdatedData(id int, insert Core) (row int, err error)
+	GetToken(id int, idToken int) (data Core, err error)
 }
