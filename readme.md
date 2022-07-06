@@ -19,8 +19,8 @@
 </div>
 
 ## How to run
-- clone or fork this project on your local.
-- create file `.env`
+- Clone or fork this project on your local.
+- Create file `.env`
 ```go
 export DB_USERNAME=<username-db>
 export DB_PASSWORD=<password-db>
@@ -28,13 +28,13 @@ export DB_PORT=<port-db>
 export DB_HOST=<host-db>
 export DB_NAME=<name-db>
 ```
-- run command to call file environment
+- Run command to call file environment
 ```go
-source .env
+$ source .env
 ```
-- and run project
+- Run project
 ```go
-go run main.go
+$ go run main.go
 
    ____    __
   / __/___/ /  ___
@@ -52,7 +52,14 @@ ____________________________________O/_______
 
 
 ## Environment GCS
-- link bucket: `https://storage.googleapis.com/event2022/` + `nama_file.png`
-- name bucket: "event2022"
-- service-account-key: `service-account-file.json`
+- Create new project on your google cloud platform
+- Create new bucket on google cloud storage and fill in the existing fields:
+  - Name bucket
+  - Location data store
+  - Class of storage
+  - Control access to object
+  - Protect object data
+- Setup your bucket for public access
+  - Access your bucket with public link `https://storage.googleapis.com/bucket_name/` + `nama_file.png`
+- Generate access-key for service account with format `.json`
  
