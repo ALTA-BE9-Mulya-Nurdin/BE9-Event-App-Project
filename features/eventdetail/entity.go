@@ -15,7 +15,9 @@ type Core struct {
 }
 
 type Business interface {
+	// GetData(idToken int, idEvent int) (row int, err error)
 }
 
 type Data interface {
+	// GetData(idToken int, idEvent int) (row int, err error)
 }
