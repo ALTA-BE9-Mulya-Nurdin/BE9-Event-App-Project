@@ -1,29 +1,29 @@
 package response
 
 import (
-	"be9/event/features/eventdetail"
 	_events "be9/event/features/events/presentation/response"
+	"be9/event/features/participants"
 	_users "be9/event/features/users/presentation/response"
 	"time"
 )
 
-type EventDetail struct {
+type Participants struct {
 	ID        int       `json:"id"`
 	CreatedAt time.Time `json:"created_at"`
 	User      _users.User
 	Events    _events.Events
 }
 
-func FromCoreList(data []eventdetail.Core) []EventDetail {
-	result := []EventDetail{}
+func FromCoreList(data []participants.Core) []Participants {
+	result := []Participants{}
 	for key := range data {
 		result = append(result, FromCore(data[key]))
 	}
 	return result
 }
 
-func FromCore(data eventdetail.Core) EventDetail {
-	return EventDetail{
+func FromCore(data participants.Core) Participants {
+	return Participants{
 		ID:        data.ID,
 		CreatedAt: data.CreatedAt,
 		User: _users.User{

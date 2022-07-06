@@ -21,9 +21,9 @@ import (
 	_eventData "be9/event/features/events/data"
 	_eventPresentation "be9/event/features/events/presentation"
 
-	_eventDetailBusiness "be9/event/features/eventdetail/business"
-	_eventDetailData "be9/event/features/eventdetail/data"
-	_eventDetailPresentation "be9/event/features/eventdetail/presentation"
+	_participantBusiness "be9/event/features/participants/business"
+	_participantData "be9/event/features/participants/data"
+	_participantPresentation "be9/event/features/participants/presentation"
 
 	"gorm.io/gorm"
 )
@@ -39,8 +39,8 @@ type Presenter struct {
 	CommentPresenter *_commentPresentation.CommentHandler
 	// Events
 	EventPresenter *_eventPresentation.EventHandler
-	// Events Detail
-	EventDetailPresenter *_eventDetailPresentation.EventDetailHandler
+	// Participant
+	ParticipantPresenter *_participantPresentation.ParticipantHandler
 }
 
 func InitFactory(dbConn *gorm.DB) Presenter {
@@ -65,9 +65,9 @@ func InitFactory(dbConn *gorm.DB) Presenter {
 	eventBusiness := _eventBusiness.NewEventBusiness(eventData)
 	eventPresentation := _eventPresentation.NewEventHandler(eventBusiness)
 
-	eventDetailData := _eventDetailData.NewEventDetailRepository(dbConn)
-	eventDetailBusiness := _eventDetailBusiness.NewEventDetailBusiness(eventDetailData)
-	eventDetailPresentation := _eventDetailPresentation.NewEventDetailHandler(eventDetailBusiness)
+	participantData := _participantData.NewParticipantRepository(dbConn)
+	participantBusiness := _participantBusiness.NewParticipantBusiness(participantData)
+	participantPresentation := _participantPresentation.NewParticipantHandler(participantBusiness)
 
 	return Presenter{
 		AuthPresenter:        authPresentation,
@@ -75,6 +75,6 @@ func InitFactory(dbConn *gorm.DB) Presenter {
 		EventPresenter:       eventPresentation,
 		CategorysPresenter:   categoryPresentation,
 		CommentPresenter:     commentPresentation,
-		EventDetailPresenter: eventDetailPresentation,
+		ParticipantPresenter: participantPresentation,
 	}
 }
