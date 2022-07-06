@@ -15,7 +15,13 @@ type Core struct {
 }
 
 type Business interface {
+	GetDataAll() (data []Core, err error)
+	GetData(idToken int, insert Core) (row int, err error)
+	InsertData(insert Core) (row int, err error)
 }
 
 type Data interface {
+	GetDataAll() (data []Core, err error)
+	GetData(idToken int, insert Core) (row int, err error)
+	InsertData(insert Core) (row int, err error)
 }

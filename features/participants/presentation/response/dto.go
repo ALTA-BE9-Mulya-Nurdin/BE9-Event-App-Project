@@ -35,6 +35,7 @@ func FromCore(data participants.Core) Participants {
 			Address:  data.User.Address,
 		},
 		Events: _events.Events{
+			ID:          data.Events.ID,
 			Image:       data.Events.Image,
 			Name:        data.Events.Name,
 			Address:     data.Events.Address,
