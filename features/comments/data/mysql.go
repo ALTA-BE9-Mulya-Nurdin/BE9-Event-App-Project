@@ -18,7 +18,7 @@ func NewCommentRepository(conn *gorm.DB) comments.Data {
 
 func (repo *mysqlCommentRepository) GetDataAll() (data []comments.Core, err error) {
 	var getAllComment []Comments
-	tx := repo.db.Find(&getAllComment)
+	tx := repo.db.Preload("User").Preload("Events").Find(&getAllComment)
 	if tx.Error != nil {
 		return []comments.Core{}, tx.Error
 	}

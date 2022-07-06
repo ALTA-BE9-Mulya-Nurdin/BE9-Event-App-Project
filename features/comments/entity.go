@@ -1,6 +1,8 @@
 package comments
 
-import "time"
+import (
+	"time"
+)
 
 type Core struct {
 	ID          int
@@ -8,7 +10,7 @@ type Core struct {
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 	User        User
-	Event       Event
+	Events      Events
 }
 
 type User struct {
@@ -16,8 +18,9 @@ type User struct {
 	Username string
 }
 
-type Event struct {
-	ID int
+type Events struct {
+	ID   int
+	Name string
 }
 
 type Business interface {
