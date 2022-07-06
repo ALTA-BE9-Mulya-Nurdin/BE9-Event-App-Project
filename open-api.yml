@@ -23,7 +23,7 @@ servers:
           - dev
           - staging
           - production
-  - url: https://event.dwp.my.id/
+  - url: https://altaproject.online/
     description: GCP API Server
 
 paths:
@@ -117,13 +117,6 @@ paths:
     put:
       tags:
         - Users
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-            example: 1
 
       requestBody:
         content:
@@ -174,13 +167,6 @@ paths:
     delete:
       tags:
         - Users
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-            example: 1
 
       responses:
         "200":
@@ -598,7 +584,7 @@ paths:
                   message:
                     type: string
                     example: failed to delete event
-  ##########
+                    
   /user/events:
     get:
       tags:

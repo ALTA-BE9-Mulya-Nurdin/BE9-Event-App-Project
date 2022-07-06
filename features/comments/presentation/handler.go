@@ -5,6 +5,7 @@ import (
 	"be9/event/features/comments/presentation/request"
 	"be9/event/features/comments/presentation/response"
 	"be9/event/helper"
+	_middlewares "be9/event/middlewares"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -29,6 +30,11 @@ func (h *CommentHandler) GetDataAll(c echo.Context) error {
 }
 
 func (h *CommentHandler) InsertComment(c echo.Context) error {
+	idToken, errToken := _middlewares.ExtractToken(c)
+	if errToken != nil {
+		c.JSON(http.StatusBadRequest, helper.ResponseFailed("invalid token"))
+	}
+
 	var insertComment request.Comments
 	errBind := c.Bind(&insertComment)
 	if errBind != nil {
@@ -36,6 +42,7 @@ func (h *CommentHandler) InsertComment(c echo.Context) error {
 	}
 
 	newComment := request.ToCore(insertComment)
+	newComment.User.ID = idToken
 	row, err := h.commentBusiness.InsertComment(newComment)
 	if row != 1 {
 		return c.JSON(http.StatusBadRequest, helper.ResponseFailed("failed to insert comment"))
