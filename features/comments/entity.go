@@ -7,17 +7,18 @@ type Core struct {
 	Description string
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
-	// User User
-	// Event Event
+	User        User
+	Event       Event
 }
 
-// type User struct {
-// 	ID   int
-// }
+type User struct {
+	ID       int
+	Username string
+}
 
-// type Event struct {
-// 	ID   int
-// }
+type Event struct {
+	ID int
+}
 
 type Business interface {
 	GetDataAll() (data []Core, err error)
