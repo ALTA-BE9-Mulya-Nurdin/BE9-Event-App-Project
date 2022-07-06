@@ -6,6 +6,7 @@ import (
 	"be9/event/features/users/presentation/response"
 	"be9/event/helper"
 	_middlewares "be9/event/middlewares"
+	"fmt"
 	"net/http"
 
 	"github.com/go-playground/validator/v10"
@@ -24,12 +25,16 @@ func NewUserHandler(business users.Business) *UserHandler {
 }
 
 func (h *UserHandler) InsertData(c echo.Context) error {
+	link, report, err := helper.AddImageUser(c)
+	if err != nil {
+		return c.JSON(report["code"].(int), helper.ResponseFailed(fmt.Sprintf("%s", report["message"])))
+	}
 	var insertData request.User
 	errBind := c.Bind(&insertData)
 	if errBind != nil {
 		return c.JSON(http.StatusBadRequest, helper.ResponseFailed("failed to bind data, check your input"))
 	}
-	insertData.Image = "image.jpg"
+	insertData.Image = link
 	v := validator.New()
 	errValidator := v.Struct(insertData)
 	if errValidator != nil {
@@ -82,20 +87,24 @@ func (h *UserHandler) DeleteData(c echo.Context) error {
 }
 
 func (h *UserHandler) UpdateData(c echo.Context) error {
+	link, report, err := helper.AddImageUser(c)
+	if err != nil {
+		return c.JSON(report["code"].(int), helper.ResponseFailed(fmt.Sprintf("%s", report["message"])))
+	}
 	idToken, errToken := _middlewares.ExtractToken(c)
 	if errToken != nil {
 		c.JSON(http.StatusBadRequest, helper.ResponseFailed("invalid token"))
 	}
 	data, _ := h.userBusiness.GetData(idToken)
 	updatedData := request.User{
-		Image:    c.FormValue("image"),
 		Username: c.FormValue("username"),
 		Email:    c.FormValue("email"),
 		Password: c.FormValue("password"),
 		Phone:    c.FormValue("phone"),
 		Address:  c.FormValue("address"),
+		Image:    link,
 	}
-	if updatedData.Image == "" {
+	if updatedData.Image == "https://storage.googleapis.com/event2022/profile_default.png" {
 		updatedData.Image = data.Image
 	}
 	if updatedData.Username == "" {

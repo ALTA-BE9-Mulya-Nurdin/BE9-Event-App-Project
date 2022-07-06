@@ -6,6 +6,7 @@ import (
 	"be9/event/features/events/presentation/response"
 	"be9/event/helper"
 	_middlewares "be9/event/middlewares"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -28,11 +29,16 @@ func (v *EventHandler) InsertData(c echo.Context) error {
 	if errToken != nil {
 		c.JSON(http.StatusBadRequest, helper.ResponseFailed("invalid token"))
 	}
+	link, report, err := helper.AddImageEvent(c)
+	if err != nil {
+		return c.JSON(report["code"].(int), helper.ResponseFailed(fmt.Sprintf("%s", report["message"])))
+	}
 	var insertData request.Events
 	errBind := c.Bind(&insertData)
 	if errBind != nil {
 		return c.JSON(http.StatusBadRequest, helper.ResponseFailed("failed to bind data, check your input"))
 	}
+	insertData.Image = link
 	val := validator.New()
 	errValidator := val.Struct(insertData)
 	if errValidator != nil {
@@ -109,13 +115,17 @@ func (v *EventHandler) UpdateData(c echo.Context) error {
 	if dataToken.User.ID != idToken {
 		return c.JSON(http.StatusUnauthorized, helper.ResponseFailed("unauthorized"))
 	}
+	link, report, err := helper.AddImageEvent(c)
+	if err != nil {
+		return c.JSON(report["code"].(int), helper.ResponseFailed(fmt.Sprintf("%s", report["message"])))
+	}
 	data, _ := v.eventBusiness.GetData(idEvent)
 	priceInt, _ := strconv.Atoi(c.FormValue("price"))
 	quoteInt, _ := strconv.Atoi(c.FormValue("quote"))
 	categorysIDInt, _ := strconv.Atoi(c.FormValue("categorys_id"))
 	updatedData := request.Events{
 		CategorysID: uint(categorysIDInt),
-		Image:       c.FormValue("image"),
+		Image:       link,
 		Name:        c.FormValue("name"),
 		Address:     c.FormValue("address"),
 		Date:        c.FormValue("date"),
@@ -130,7 +140,7 @@ func (v *EventHandler) UpdateData(c echo.Context) error {
 	if updatedData.CategorysID == 0 {
 		updatedData.CategorysID = uint(data.Categorys.ID)
 	}
-	if updatedData.Image == "" {
+	if updatedData.Image == "https://storage.googleapis.com/event2022/event-gomeet.png" {
 		updatedData.Image = data.Image
 	}
 	if updatedData.Name == "" {
@@ -185,6 +195,18 @@ func (v *EventHandler) GetDataUserEvent(c echo.Context) error {
 		c.JSON(http.StatusBadRequest, helper.ResponseFailed("invalid token"))
 	}
 	data, err := v.eventBusiness.GetDataUserEvent(idToken)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("failed to get all data"))
+	}
+	return c.JSON(http.StatusOK, helper.ResponseSuccessWithData("success to get all data", response.FromCoreList(data)))
+}
+
+func (v *EventHandler) GetDataHistoryEvent(c echo.Context) error {
+	idToken, errToken := _middlewares.ExtractToken(c)
+	if errToken != nil {
+		c.JSON(http.StatusBadRequest, helper.ResponseFailed("invalid token"))
+	}
+	data, err := v.eventBusiness.GetDataHistoryEvent(idToken)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("failed to get all data"))
 	}

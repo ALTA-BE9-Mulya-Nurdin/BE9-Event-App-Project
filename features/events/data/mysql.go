@@ -90,3 +90,12 @@ func (repo *mysqlEventRepository) GetDataUserEvent(idToken int) (data []events.C
 	}
 	return toCoreList(getDataEvents), nil
 }
+
+func (repo *mysqlEventRepository) GetDataHistoryEvent(idToken int) (data []events.Core, err error) {
+	var getHisEvents []Events
+	tx := repo.db.Preload("User").Preload("Events").First(&getHisEvents, idToken)
+	if tx.Error != nil {
+		return []events.Core{}, tx.Error
+	}
+	return toCoreList(getHisEvents), nil
+}
