@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io"
 	"net/url"
-	"os"
 	"time"
 
 	"cloud.google.com/go/storage"
@@ -15,7 +14,7 @@ import (
 
 func AddImageEvent(c echo.Context) (link string, message map[string]interface{}, err error) {
 	file, err := c.FormFile("image")
-	bucket := os.Getenv("DB_BUCKET")
+	bucket := "event2022"
 	if err != nil {
 		url := "https://storage.googleapis.com/" + bucket + "/event-gomeet.png"
 		return url, map[string]interface{}{
@@ -89,7 +88,7 @@ func AddImageEvent(c echo.Context) (link string, message map[string]interface{},
 
 func AddImageUser(c echo.Context) (link string, message map[string]interface{}, err error) {
 	file, err := c.FormFile("image")
-	bucket := os.Getenv("DB_BUCKET")
+	bucket := "event2022"
 	if err != nil {
 		url := "https://storage.googleapis.com/" + bucket + "/profile_default.png"
 		return url, map[string]interface{}{
