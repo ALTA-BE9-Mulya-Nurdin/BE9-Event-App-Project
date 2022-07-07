@@ -16,5 +16,4 @@ func InitMigrate(db *gorm.DB) {
 	db.AutoMigrate(&_mComments.Comments{})
 	db.AutoMigrate(&_mEvents.Events{})
 	db.AutoMigrate(&_mParticipants.Participants{})
-	// db.AutoMigrate(&_mHistory.Historys{})
 }
