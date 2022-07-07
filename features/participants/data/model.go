@@ -12,10 +12,10 @@ import (
 
 type Participants struct {
 	gorm.Model
-	UserID   uint `json:"user_id" form:"user_id"`
-	EventsID uint `json:"events_id" form:"events_id"`
-	User     _users.User
-	Events   _events.Events
+	UserID   uint           `json:"user_id" form:"user_id"`
+	EventsID uint           `json:"events_id" form:"events_id"`
+	User     _users.User    `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+	Events   _events.Events `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
 
 func toCoreList(data []Participants) []participants.Core {

@@ -27,8 +27,9 @@ func (usecase *userUsecase) InsertData(insert users.Core) (row int, err error) {
 	return row, err
 }
 
-func (usecase *userUsecase) GetAllData() (data []users.Core, err error) {
-	data, err = usecase.userData.GetAllData()
+func (usecase *userUsecase) GetAllData(limit, offset int) (data []users.Core, err error) {
+	var param string
+	data, err = usecase.userData.GetAllData(param)
 	return data, err
 }
 

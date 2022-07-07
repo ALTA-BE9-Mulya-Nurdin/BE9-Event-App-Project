@@ -12,21 +12,21 @@ import (
 
 type Events struct {
 	gorm.Model
-	Image       string `json:"image" form:"image"`
-	Name        string `json:"name" form:"name"`
-	Address     string `json:"address" form:"address"`
-	Date        string `json:"date" form:"date"`
-	Price       int    `json:"price" form:"price"`
-	Quote       int    `json:"quote" form:"quote"`
-	Longitude   string `json:"longitude" form:"longitude"`
-	Latitude    string `json:"latitude" form:"latitude"`
-	Link        string `json:"link" form:"link"`
-	Description string `json:"description" form:"description"`
-	Status      string `json:"status" form:"status"`
-	UserID      uint   `json:"user_id" form:"user_id"`
-	CategorysID uint   `json:"categorys_id" form:"categorys_id"`
-	User        _users.User
-	Categorys   _categorys.Categorys
+	Image       string               `json:"image" form:"image"`
+	Name        string               `json:"name" form:"name"`
+	Address     string               `json:"address" form:"address"`
+	Date        string               `json:"date" form:"date"`
+	Price       int                  `json:"price" form:"price"`
+	Quote       int                  `json:"quote" form:"quote"`
+	Longitude   string               `json:"longitude" form:"longitude"`
+	Latitude    string               `json:"latitude" form:"latitude"`
+	Link        string               `json:"link" form:"link"`
+	Description string               `json:"description" form:"description"`
+	Status      string               `json:"status" form:"status"`
+	UserID      uint                 `json:"user_id" form:"user_id"`
+	CategorysID uint                 `json:"categorys_id" form:"categorys_id"`
+	User        _users.User          `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+	Categorys   _categorys.Categorys `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
 
 func toCoreList(data []Events) []events.Core {

@@ -11,8 +11,8 @@ type Comments struct {
 	Description string `json:"description" form:"description"`
 	UserID      uint   `json:"user_id" form:"user_id"`
 	EventsID    uint   `json:"events_id" form:"events_id"`
-	User        User
-	Events      Events
+	User        User   `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+	Events      Events `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
 
 type User struct {
