@@ -66,7 +66,11 @@ func (v *EventHandler) InsertData(c echo.Context) error {
 }
 
 func (v *EventHandler) GetAllData(c echo.Context) error {
-	data, err := v.eventBusiness.GetAllData()
+	limit := c.QueryParam("limit")
+	offset := c.QueryParam("offset")
+	limitint, _ := strconv.Atoi(limit)
+	offsetint, _ := strconv.Atoi(offset)
+	data, err := v.eventBusiness.GetAllData(limitint, offsetint)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("failed to get all data"))
 	}

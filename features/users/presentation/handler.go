@@ -8,6 +8,7 @@ import (
 	_middlewares "be9/event/middlewares"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
@@ -52,7 +53,11 @@ func (h *UserHandler) InsertData(c echo.Context) error {
 }
 
 func (h *UserHandler) GetAllData(c echo.Context) error {
-	data, err := h.userBusiness.GetAllData()
+	limit := c.QueryParam("limit")
+	offset := c.QueryParam("offset")
+	limitint, _ := strconv.Atoi(limit)
+	offsetint, _ := strconv.Atoi(offset)
+	data, err := h.userBusiness.GetAllData(limitint, offsetint)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("failed to get all data"))
 	}

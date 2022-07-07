@@ -17,8 +17,8 @@ func (evcase *eventUsecase) InsertData(insert events.Core) (row int, err error) 
 	return row, err
 }
 
-func (evcase *eventUsecase) GetAllData() (data []events.Core, err error) {
-	data, err = evcase.eventData.GetAllData()
+func (evcase *eventUsecase) GetAllData(limit int, offset int) (data []events.Core, err error) {
+	data, err = evcase.eventData.GetAllData(limit, offset)
 	return data, err
 }
 

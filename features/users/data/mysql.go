@@ -29,9 +29,9 @@ func (repo *mysqlUserRepository) InsertData(insert users.Core) (row int, err err
 	return int(tx.RowsAffected), nil
 }
 
-func (repo *mysqlUserRepository) GetAllData() (data []users.Core, err error) {
+func (repo *mysqlUserRepository) GetAllData(limit int, offset int) (data []users.Core, err error) {
 	var getAllData []User
-	tx := repo.db.Find(&getAllData)
+	tx := repo.db.Limit(limit).Offset(offset).Find(&getAllData)
 	if tx.Error != nil {
 		return []users.Core{}, tx.Error
 	}

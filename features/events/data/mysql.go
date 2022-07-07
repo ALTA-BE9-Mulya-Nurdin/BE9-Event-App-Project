@@ -29,9 +29,9 @@ func (repo *mysqlEventRepository) InsertData(insert events.Core) (row int, err e
 	return int(tx.RowsAffected), nil
 }
 
-func (repo *mysqlEventRepository) GetAllData() (data []events.Core, err error) {
+func (repo *mysqlEventRepository) GetAllData(limit int, offset int) (data []events.Core, err error) {
 	var getAllData []Events
-	tx := repo.db.Preload("User").Preload("Categorys").Find(&getAllData)
+	tx := repo.db.Limit(limit).Offset(offset).Preload("User").Preload("Categorys").Find(&getAllData)
 	if tx.Error != nil {
 		return []events.Core{}, tx.Error
 	}
